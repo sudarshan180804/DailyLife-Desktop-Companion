@@ -190,8 +190,8 @@ html, body, #root {
     rgba(10, 10, 15, 0.04) 88%,
     rgba(10, 10, 15, 0) 100%
   );
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   mask-image: linear-gradient(90deg, #000 0%, #000 65%, transparent 100%);
   -webkit-mask-image: linear-gradient(90deg, #000 0%, #000 65%, transparent 100%);
   transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s ease;
@@ -502,8 +502,8 @@ html, body, #root {
   border-radius: 20px;
   background: linear-gradient(135deg, rgba(107, 29, 47, 0.85) 0%, rgba(84, 21, 35, 0.85) 100%);
   border: 1px solid rgba(212, 175, 55, 0.45);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   color: #f5ebd9;
   font-weight: 700;
   font-size: 0.94rem;
@@ -534,10 +534,10 @@ html, body, #root {
   gap: 14px;
   padding: 12px 16px;
   border-radius: 14px;
-  background: rgba(20, 14, 10, 0.62);
+  background: linear-gradient(135deg, rgba(20, 14, 10, 0.24) 0%, rgba(14, 10, 8, 0.14) 60%, rgba(10, 8, 6, 0.06) 100%);
   border: 1px solid rgba(212, 175, 55, 0.2);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
   transition: transform 0.2s ease, border-color 0.2s ease;
 }
@@ -667,12 +667,12 @@ html, body, #root {
 
 /* Tasks List Container - Smoked Wood Guild Request Board */
 .tasks-list-section {
-  background: rgba(20, 14, 10, 0.65);
+  background: linear-gradient(180deg, rgba(20, 14, 10, 0.25) 0%, rgba(16, 12, 9, 0.15) 60%, rgba(10, 8, 6, 0.06) 100%);
   border: 1px solid rgba(212, 175, 55, 0.22);
   border-radius: 16px;
   padding: 12px;
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   box-shadow: inset 0 1px 1px rgba(229, 193, 88, 0.1), 0 8px 24px rgba(0, 0, 0, 0.4);
   overflow-y: auto;
   display: flex;
@@ -810,7 +810,7 @@ html, body, #root {
 }
 
 .detail-panel-paper {
-  background: linear-gradient(135deg, rgba(245, 235, 217, 0.95) 0%, rgba(235, 220, 198, 0.92) 100%);
+  background: linear-gradient(180deg, rgba(245, 235, 217, 0.58) 0%, rgba(240, 228, 208, 0.38) 55%, rgba(230, 215, 192, 0.18) 100%);
   color: #1c130d;
   border-radius: 16px;
   border: 1px solid rgba(160, 90, 44, 0.4);
@@ -1108,7 +1108,7 @@ html, body, #root {
   inset: 0;
   z-index: 2000;
   background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1116,7 +1116,7 @@ html, body, #root {
 }
 
 .modal-content-glass {
-  background: rgba(20, 14, 10, 0.92);
+  background: rgba(20, 14, 10, 0.75);
   border: 1px solid rgba(212, 175, 55, 0.35);
   border-radius: 20px;
   width: 480px;
@@ -1310,8 +1310,8 @@ html, body, #root {
   border-radius: 20px;
   background: rgba(12, 12, 16, 0.88);
   border: 1px solid rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.1);
   animation: fadeInDown 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -1451,8 +1451,8 @@ html, body, #root {
   border-radius: 20px;
   background: linear-gradient(135deg, rgba(107, 29, 47, 0.88) 0%, rgba(84, 21, 35, 0.88) 100%);
   border: 1px solid rgba(212, 175, 55, 0.45);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   color: #f5ebd9;
   font-weight: 700;
   font-size: 0.92rem;
@@ -1482,10 +1482,10 @@ html, body, #root {
   gap: 14px;
   padding: 14px 18px;
   border-radius: 14px;
-  background: rgba(20, 14, 10, 0.65);
+  background: linear-gradient(135deg, rgba(20, 14, 10, 0.24) 0%, rgba(14, 10, 8, 0.14) 60%, rgba(10, 8, 6, 0.06) 100%);
   border: 1px solid rgba(212, 175, 55, 0.22);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
   transition: transform 0.2s ease, border-color 0.2s ease;
 }
@@ -1555,10 +1555,10 @@ html, body, #root {
   gap: 20px;
   padding: 16px 24px;
   border-radius: 14px;
-  background: linear-gradient(135deg, rgba(24, 17, 12, 0.72) 0%, rgba(18, 12, 8, 0.68) 100%);
+  background: linear-gradient(135deg, rgba(24, 17, 12, 0.25) 0%, rgba(18, 12, 8, 0.15) 50%, rgba(12, 8, 5, 0.06) 100%);
   border: 1px solid rgba(212, 175, 55, 0.25);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
@@ -1769,10 +1769,10 @@ html, body, #root {
   gap: 20px;
   padding: 18px 24px;
   border-radius: 16px;
-  background: linear-gradient(135deg, rgba(24, 17, 12, 0.78) 0%, rgba(18, 12, 8, 0.74) 100%);
+  background: linear-gradient(135deg, rgba(24, 17, 12, 0.26) 0%, rgba(18, 12, 8, 0.16) 55%, rgba(12, 8, 5, 0.07) 100%);
   border: 1px solid rgba(212, 175, 55, 0.3);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
 }
 
@@ -1943,12 +1943,12 @@ html, body, #root {
 }
 
 .project-detail-container .detail-card {
-  background: rgba(20, 14, 10, 0.65);
+  background: linear-gradient(180deg, rgba(20, 14, 10, 0.24) 0%, rgba(16, 12, 9, 0.15) 65%, rgba(10, 8, 6, 0.06) 100%);
   border: 1px solid rgba(212, 175, 55, 0.22);
   border-radius: 14px;
   padding: 16px;
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
   display: flex;
   flex-direction: column;
@@ -2360,4 +2360,2021 @@ html, body, #root {
 .project-detail-container .resource-arrow {
   font-size: 0.75rem;
   color: #8c7662;
+}
+
+
+/* ==========================================================================
+   GYM SECTION STYLES (Scoped specifically to Gym containers)
+   ========================================================================== */
+
+.gym-page-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  color: #f5ebd9;
+  animation: fadeIn 0.35s ease;
+  overflow: hidden;
+}
+
+/* Gym Overview Container */
+.gym-overview-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  height: 100%;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.gym-overview-container .gym-header-bar {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding-bottom: 2px;
+}
+
+.gym-overview-container .gym-title-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.gym-overview-container .gym-crest-badge {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(212, 175, 55, 0.12);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 14px rgba(212, 175, 55, 0.2);
+}
+
+.gym-overview-container .gym-page-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  font-family: Georgia, "Times New Roman", serif;
+  color: #f5ebd9;
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+  text-shadow: 0 3px 14px rgba(0, 0, 0, 0.8), 0 0 10px rgba(212, 175, 55, 0.25);
+}
+
+.gym-overview-container .gym-quote-text {
+  font-size: 0.88rem;
+  font-style: italic;
+  font-family: Georgia, serif;
+  color: rgba(226, 209, 179, 0.82);
+  margin-top: 2px;
+}
+
+/* Gym Overview Grid */
+.gym-overview-container .gym-overview-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 16px;
+  flex: 1;
+  min-height: 0;
+}
+
+.gym-overview-container .gym-card {
+  background: linear-gradient(180deg, rgba(20, 14, 10, 0.24) 0%, rgba(16, 12, 9, 0.15) 65%, rgba(10, 8, 6, 0.06) 100%);
+  border: 1px solid rgba(212, 175, 55, 0.22);
+  border-radius: 16px;
+  padding: 18px;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  position: relative;
+}
+
+/* Today's Training Card */
+.gym-overview-container .today-training-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.gym-overview-container .card-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px dashed rgba(212, 175, 55, 0.2);
+  padding-bottom: 12px;
+}
+
+.gym-overview-container .training-title-block {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.gym-overview-container .shield-icon-small {
+  font-size: 1.4rem;
+}
+
+.gym-overview-container .training-routine-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  font-family: Georgia, serif;
+  color: #f5ebd9;
+  letter-spacing: 0.02em;
+}
+
+.gym-overview-container .training-focus-subtitle {
+  font-size: 0.78rem;
+  color: #a89880;
+}
+
+.gym-overview-container .training-progress-block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.gym-overview-container .progress-fraction-text {
+  font-size: 0.78rem;
+  color: #a89880;
+}
+
+.gym-overview-container .gold-num {
+  color: #e5c158;
+  font-weight: 700;
+}
+
+.gym-overview-container .routine-progress-bar-bg {
+  width: 120px;
+  height: 6px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 3px;
+  overflow: hidden;
+  border: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+.gym-overview-container .routine-progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #d4af37, #f97316);
+  border-radius: 3px;
+}
+
+/* Exercise Overview Rows */
+.gym-overview-container .overview-exercise-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.gym-overview-container .exercise-overview-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: rgba(245, 235, 217, 0.035);
+  border: 1px solid rgba(212, 175, 55, 0.1);
+  transition: all 0.2s ease;
+}
+
+.gym-overview-container .exercise-overview-row:hover {
+  background: rgba(245, 235, 217, 0.07);
+  border-color: rgba(212, 175, 55, 0.3);
+}
+
+.gym-overview-container .exercise-overview-row.completed {
+  opacity: 0.75;
+}
+
+.gym-overview-container .ex-icon-box {
+  font-size: 1.1rem;
+}
+
+.gym-overview-container .ex-main-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.gym-overview-container .ex-name {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #f5ebd9;
+}
+
+.gym-overview-container .ex-sets-reps {
+  font-size: 0.76rem;
+  color: #a89880;
+}
+
+.gym-overview-container .ex-weight {
+  color: #e2d1b3;
+  font-weight: 600;
+}
+
+.gym-overview-container .ex-reward-block {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.gym-overview-container .ex-xp-badge {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #e5c158;
+}
+
+.gym-overview-container .ex-check-circle {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid rgba(212, 175, 55, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  color: #1c130d;
+}
+
+.gym-overview-container .ex-check-circle.checked {
+  background: linear-gradient(135deg, #d4af37, #8b4513);
+  border-color: #e5c158;
+  color: #ffffff;
+  font-weight: 800;
+}
+
+.gym-overview-container .card-footer-action {
+  margin-top: auto;
+  padding-top: 10px;
+}
+
+.gym-overview-container .view-full-workout-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 11px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(107, 29, 47, 0.88) 0%, rgba(84, 21, 35, 0.88) 100%);
+  border: 1px solid rgba(212, 175, 55, 0.45);
+  color: #f5ebd9;
+  font-weight: 700;
+  font-size: 0.92rem;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.gym-overview-container .view-full-workout-btn:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, rgba(127, 29, 53, 0.95) 0%, rgba(107, 29, 47, 0.95) 100%);
+  border-color: rgba(229, 193, 88, 0.7);
+  box-shadow: 0 6px 22px rgba(107, 29, 47, 0.5), 0 0 12px rgba(212, 175, 55, 0.3);
+}
+
+/* Right Column: Weekly Progress & Body Stats */
+.gym-overview-container .gym-right-col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.gym-overview-container .card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.gym-overview-container .card-header-icon {
+  font-size: 1.1rem;
+}
+
+.gym-overview-container .card-header-title {
+  font-size: 0.98rem;
+  font-weight: 700;
+  font-family: Georgia, serif;
+  color: #f5ebd9;
+}
+
+.gym-overview-container .weekly-schedule-row {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.gym-overview-container .day-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 4px;
+  border-radius: 10px;
+  background: rgba(245, 235, 217, 0.03);
+  border: 1px solid rgba(212, 175, 55, 0.15);
+  position: relative;
+}
+
+.gym-overview-container .day-name {
+  font-size: 0.72rem;
+  color: #a89880;
+  font-weight: 500;
+}
+
+.gym-overview-container .day-badge-circle {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  color: #8c7662;
+}
+
+.gym-overview-container .day-node.status-completed .day-badge-circle {
+  background: rgba(163, 230, 53, 0.15);
+  border: 1px solid rgba(163, 230, 53, 0.4);
+  color: #a3e635;
+  font-weight: 700;
+}
+
+.gym-overview-container .day-node.status-today {
+  border-color: rgba(249, 115, 22, 0.6);
+  background: rgba(249, 115, 22, 0.08);
+  box-shadow: 0 0 12px rgba(249, 115, 22, 0.2);
+}
+
+.gym-overview-container .day-node.status-today .day-name {
+  color: #f97316;
+  font-weight: 700;
+}
+
+.gym-overview-container .today-label {
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: #f97316;
+}
+
+/* Body Stats & Lion Rank Seal */
+.gym-overview-container .body-stats-split {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 16px;
+}
+
+.gym-overview-container .stats-bars-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.gym-overview-container .stat-bars-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.gym-overview-container .stat-bar-item {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.gym-overview-container .stat-label-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.74rem;
+}
+
+.gym-overview-container .stat-name {
+  color: #e2d1b3;
+}
+
+.gym-overview-container .stat-level {
+  color: #d4af37;
+  font-weight: 700;
+}
+
+.gym-overview-container .stat-bar-bg {
+  width: 100%;
+  height: 5px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.gym-overview-container .stat-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #d4af37, #f97316);
+  border-radius: 3px;
+}
+
+.gym-overview-container .warrior-rank-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-left: 1px dashed rgba(212, 175, 55, 0.2);
+  padding-left: 14px;
+}
+
+.gym-overview-container .lion-rank-seal {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #b45309 0%, #451a03 100%);
+  border: 2px solid #f59e0b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 16px rgba(245, 158, 11, 0.35);
+  margin-bottom: 6px;
+}
+
+.gym-overview-container .lion-emblem {
+  font-size: 1.6rem;
+}
+
+.gym-overview-container .rank-title-label {
+  font-size: 0.68rem;
+  color: #a89880;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.gym-overview-container .rank-name {
+  font-size: 1.05rem;
+  font-weight: 800;
+  font-family: Georgia, serif;
+  color: #f5ebd9;
+  margin: 1px 0 4px 0;
+}
+
+.gym-overview-container .rank-xp-bar-bg {
+  width: 90px;
+  height: 4px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 2px;
+}
+
+.gym-overview-container .rank-xp-bar-fill {
+  height: 100%;
+  background: #f59e0b;
+}
+
+.gym-overview-container .rank-xp-text {
+  font-size: 0.66rem;
+  color: #a89880;
+}
+
+/* Bottom Summary Row */
+.gym-overview-container .gym-summary-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  width: 100%;
+}
+
+.gym-overview-container .summary-card-parchment {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(20, 14, 10, 0.24) 0%, rgba(14, 10, 8, 0.14) 60%, rgba(10, 8, 6, 0.06) 100%);
+  border: 1px solid rgba(212, 175, 55, 0.22);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.gym-overview-container .summary-card-parchment:hover {
+  transform: translateY(-2px);
+  border-color: rgba(212, 175, 55, 0.45);
+}
+
+.gym-overview-container .summary-icon-box {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(212, 175, 55, 0.08);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+.gym-overview-container .flame-glow {
+  background: rgba(249, 115, 22, 0.14);
+  border-color: rgba(249, 115, 22, 0.35);
+}
+
+.gym-overview-container .swords-glow {
+  background: rgba(212, 175, 55, 0.14);
+  border-color: rgba(212, 175, 55, 0.35);
+}
+
+.gym-overview-container .star-glow {
+  background: rgba(234, 179, 8, 0.14);
+  border-color: rgba(234, 179, 8, 0.35);
+}
+
+.gym-overview-container .summary-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.gym-overview-container .summary-title {
+  font-size: 0.74rem;
+  color: #a89880;
+}
+
+.gym-overview-container .summary-val {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #f5ebd9;
+  line-height: 1.2;
+}
+
+.gym-overview-container .summary-sub {
+  font-size: 0.68rem;
+  color: rgba(226, 209, 179, 0.65);
+}
+
+/* ==========================================================================
+   GYM WORKOUT DETAIL STYLES (Scoped to .gym-workout-container)
+   ========================================================================== */
+
+.gym-workout-container {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  height: 100%;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.gym-workout-container .workout-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.gym-workout-container .back-gym-btn {
+  background: rgba(20, 14, 10, 0.6);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  color: #e2d1b3;
+  padding: 6px 14px;
+  border-radius: 12px;
+  font-size: 0.84rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.gym-workout-container .back-gym-btn:hover {
+  background: rgba(20, 14, 10, 0.85);
+  border-color: #d4af37;
+  color: #f5ebd9;
+}
+
+.gym-workout-container .workout-header-block {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.gym-workout-container .header-crest {
+  font-size: 1.6rem;
+}
+
+.gym-workout-container .workout-main-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  font-family: Georgia, serif;
+  color: #f5ebd9;
+  line-height: 1.1;
+}
+
+.gym-workout-container .workout-subtitle {
+  font-size: 0.78rem;
+  color: #a89880;
+}
+
+.gym-workout-container .workout-header-badges {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.gym-workout-container .header-badge-box {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  background: rgba(20, 14, 10, 0.6);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  padding: 5px 12px;
+  border-radius: 10px;
+}
+
+.gym-workout-container .badge-lbl {
+  font-size: 0.66rem;
+  color: #8c7662;
+}
+
+.gym-workout-container .badge-val {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #f5ebd9;
+}
+
+/* Workout Main Grid (Timeline Left + Exercise Detail Right) */
+.gym-workout-container .workout-main-grid {
+  display: grid;
+  grid-template-columns: 310px 1fr;
+  gap: 16px;
+  flex: 1;
+  min-height: 0;
+}
+
+/* Timeline Panel */
+.gym-workout-container .workout-timeline-panel {
+  background: linear-gradient(180deg, rgba(20, 14, 10, 0.24) 0%, rgba(16, 12, 9, 0.15) 60%, rgba(10, 8, 6, 0.06) 100%);
+  border: 1px solid rgba(212, 175, 55, 0.22);
+  border-radius: 16px;
+  padding: 14px;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow: hidden;
+}
+
+.gym-workout-container .panel-title-bar {
+  padding-bottom: 6px;
+  border-bottom: 1px dashed rgba(212, 175, 55, 0.2);
+}
+
+.gym-workout-container .panel-title-text {
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #d4af37;
+  font-family: Georgia, serif;
+}
+
+.gym-workout-container .timeline-scroll-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(212, 175, 55, 0.3) transparent;
+  padding-right: 4px;
+}
+
+.gym-workout-container .timeline-row-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 10px;
+  border-radius: 10px;
+  background: rgba(245, 235, 217, 0.03);
+  border: 1px solid rgba(212, 175, 55, 0.1);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.gym-workout-container .timeline-row-item:hover {
+  background: rgba(245, 235, 217, 0.06);
+  border-color: rgba(212, 175, 55, 0.3);
+}
+
+.gym-workout-container .timeline-row-item.active {
+  background: linear-gradient(90deg, rgba(249, 115, 22, 0.2) 0%, rgba(249, 115, 22, 0.04) 100%);
+  border: 1px solid rgba(249, 115, 22, 0.6);
+  box-shadow: 0 0 14px rgba(249, 115, 22, 0.2);
+}
+
+.gym-workout-container .timeline-time {
+  font-size: 0.72rem;
+  color: #8c7662;
+  font-weight: 500;
+  width: 30px;
+}
+
+.gym-workout-container .timeline-icon-cell {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.82rem;
+}
+
+.gym-workout-container .exercise-number-circle {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #d4af37;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gym-workout-container .timeline-info-cell {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+}
+
+.gym-workout-container .timeline-item-title {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #f5ebd9;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.gym-workout-container .timeline-item-sub {
+  font-size: 0.68rem;
+  color: #a89880;
+}
+
+.gym-workout-container .timeline-check-mark {
+  color: #a3e635;
+  font-weight: 800;
+  font-size: 0.82rem;
+}
+
+.gym-workout-container .timeline-active-arrow {
+  color: #f97316;
+  font-weight: 800;
+  font-size: 0.9rem;
+}
+
+/* Current Exercise Panel */
+.gym-workout-container .workout-exercise-panel {
+  background: linear-gradient(180deg, rgba(20, 14, 10, 0.25) 0%, rgba(16, 12, 9, 0.15) 60%, rgba(10, 8, 6, 0.06) 100%);
+  border: 1px solid rgba(212, 175, 55, 0.22);
+  border-radius: 16px;
+  padding: 16px;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  overflow-y: auto;
+}
+
+.gym-workout-container .exercise-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.gym-workout-container .ex-title-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.gym-workout-container .ex-order-badge {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1.5px solid #d4af37;
+  color: #d4af37;
+  font-weight: 800;
+  font-size: 0.88rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gym-workout-container .ex-active-name {
+  font-size: 1.35rem;
+  font-weight: 800;
+  font-family: Georgia, serif;
+  color: #f5ebd9;
+}
+
+.gym-workout-container .ex-category-tag {
+  font-size: 0.74rem;
+  color: #a89880;
+}
+
+.gym-workout-container .mark-complete-btn {
+  padding: 8px 16px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #6b1d2f 0%, #541523 100%);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  color: #f5ebd9;
+  font-weight: 700;
+  font-size: 0.84rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(107, 29, 47, 0.35);
+}
+
+.gym-workout-container .mark-complete-btn:hover {
+  background: linear-gradient(135deg, #7f1d35 0%, #6b1d2f 100%);
+  transform: translateY(-1px);
+}
+
+.gym-workout-container .mark-complete-btn.is-completed {
+  background: linear-gradient(135deg, #15803d 0%, #166534 100%);
+  border-color: rgba(163, 230, 53, 0.4);
+}
+
+/* Media & Targeted Muscles split row */
+.gym-workout-container .exercise-media-row {
+  display: grid;
+  grid-template-columns: 1fr 220px;
+  gap: 16px;
+}
+
+.gym-workout-container .exercise-video-box {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  height: 220px;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+  transition: height 0.3s ease;
+}
+
+.gym-workout-container .exercise-video-box.enlarged {
+  height: 380px;
+}
+
+.gym-workout-container .exercise-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.gym-workout-container .play-button-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: rgba(20, 14, 10, 0.7);
+  border: 2px solid #d4af37;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 0 16px rgba(212, 175, 55, 0.4);
+  transition: transform 0.2s ease;
+}
+
+.gym-workout-container .play-button-overlay:hover {
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+.gym-workout-container .play-triangle {
+  width: 0;
+  height: 0;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  border-left: 14px solid #d4af37;
+  margin-left: 3px;
+}
+
+.gym-workout-container .enlarge-video-btn {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(20, 14, 10, 0.8);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  color: #f5ebd9;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.gym-workout-container .enlarge-video-btn:hover {
+  background: rgba(212, 175, 55, 0.25);
+}
+
+/* Targeted Muscles Box */
+.gym-workout-container .targeted-muscles-box {
+  background: rgba(245, 235, 217, 0.03);
+  border: 1px solid rgba(212, 175, 55, 0.18);
+  border-radius: 14px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.gym-workout-container .box-title {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #d4af37;
+  align-self: flex-start;
+}
+
+.gym-workout-container .muscles-body-diagram {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gym-workout-container .muscle-legend-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+}
+
+.gym-workout-container .muscle-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.7rem;
+}
+
+.gym-workout-container .legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.gym-workout-container .legend-name {
+  color: #e2d1b3;
+}
+
+/* Lower Exercise Info Cards Grid */
+.gym-workout-container .exercise-details-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.gym-workout-container .info-card {
+  background: rgba(245, 235, 217, 0.03);
+  border: 1px solid rgba(212, 175, 55, 0.15);
+  border-radius: 12px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.gym-workout-container .info-card-title {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #d4af37;
+}
+
+.gym-workout-container .target-stats-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.gym-workout-container .target-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: #f5ebd9;
+}
+
+.gym-workout-container .instructions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.76rem;
+  color: #e2d1b3;
+  padding-left: 14px;
+}
+
+.gym-workout-container .tips-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.76rem;
+  color: #a89880;
+  list-style: none;
+}
+
+.gym-workout-container .rest-info-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.gym-workout-container .rest-val {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #f5ebd9;
+}
+
+.gym-workout-container .rest-sub {
+  font-size: 0.74rem;
+  color: #a89880;
+}
+
+
+/* ==========================================================================
+   NOTES SECTION STYLES (Scoped specifically to Notes containers)
+   ========================================================================== */
+
+.notes-page-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  color: #f5ebd9;
+  animation: fadeIn 0.35s ease;
+  overflow: hidden;
+}
+
+/* Notes Overview Container */
+.notes-overview-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  height: 100%;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.notes-overview-container .notes-header-bar {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding-bottom: 2px;
+}
+
+.notes-overview-container .notes-title-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.notes-overview-container .notes-crest-badge {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(212, 175, 55, 0.12);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 14px rgba(212, 175, 55, 0.2);
+}
+
+.notes-overview-container .notes-page-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  font-family: Georgia, "Times New Roman", serif;
+  color: #f5ebd9;
+  letter-spacing: 0.04em;
+  line-height: 1.1;
+  text-shadow: 0 3px 14px rgba(0, 0, 0, 0.8), 0 0 10px rgba(212, 175, 55, 0.25);
+}
+
+.notes-overview-container .notes-quote-text {
+  font-size: 0.88rem;
+  font-style: italic;
+  font-family: Georgia, serif;
+  color: rgba(226, 209, 179, 0.82);
+  margin-top: 2px;
+}
+
+.notes-overview-container .notes-stats-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.notes-overview-container .notes-stat-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(135deg, rgba(20, 14, 10, 0.24) 0%, rgba(14, 10, 8, 0.12) 100%);
+  border: 1px solid rgba(212, 175, 55, 0.22);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  padding: 6px 12px;
+  border-radius: 12px;
+  font-size: 0.76rem;
+}
+
+.notes-overview-container .stat-val {
+  font-weight: 800;
+  color: #f5ebd9;
+}
+
+.notes-overview-container .stat-lbl {
+  color: #a89880;
+  font-size: 0.68rem;
+  font-weight: 600;
+}
+
+.notes-overview-container .user-profile-badge-small {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, rgba(20, 14, 10, 0.24) 0%, rgba(14, 10, 8, 0.12) 100%);
+  border: 1px solid rgba(212, 175, 55, 0.22);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  padding: 5px 12px;
+  border-radius: 14px;
+}
+
+.notes-overview-container .avatar-circle-small {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(212, 175, 55, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+}
+
+.notes-overview-container .profile-badge-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.notes-overview-container .profile-name-sm {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #f5ebd9;
+}
+
+.notes-overview-container .profile-lv-sm {
+  font-size: 0.65rem;
+  color: #d4af37;
+}
+
+/* Notes Main Grid */
+.notes-overview-container .notes-main-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.25fr;
+  gap: 16px;
+  flex: 1;
+  min-height: 0;
+}
+
+.notes-overview-container .notes-panel {
+  background: linear-gradient(180deg, rgba(20, 14, 10, 0.25) 0%, rgba(16, 12, 9, 0.15) 60%, rgba(10, 8, 6, 0.06) 100%);
+  border: 1px solid rgba(212, 175, 55, 0.22);
+  border-radius: 16px;
+  padding: 16px;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.notes-overview-container .panel-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px dashed rgba(212, 175, 55, 0.2);
+  padding-bottom: 8px;
+}
+
+.notes-overview-container .panel-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  font-family: Georgia, serif;
+  color: #f5ebd9;
+  letter-spacing: 0.02em;
+}
+
+.notes-overview-container .view-all-link {
+  font-size: 0.76rem;
+  color: #d4af37;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.notes-overview-container .new-notebook-btn {
+  background: rgba(212, 175, 55, 0.15);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  color: #f5ebd9;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.notes-overview-container .new-notebook-btn:hover {
+  background: rgba(212, 175, 55, 0.3);
+  border-color: #d4af37;
+}
+
+/* Recent Notes List */
+.notes-overview-container .recent-notes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.notes-overview-container .recent-note-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(245, 235, 217, 0.035);
+  border: 1px solid rgba(212, 175, 55, 0.12);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.notes-overview-container .recent-note-row:hover {
+  background: rgba(212, 175, 55, 0.1);
+  border-color: rgba(212, 175, 55, 0.35);
+  transform: translateX(2px);
+}
+
+.notes-overview-container .note-icon-box {
+  font-size: 1.1rem;
+}
+
+.notes-overview-container .note-info-block {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 2px;
+}
+
+.notes-overview-container .note-title-line {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.notes-overview-container .note-row-title {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #f5ebd9;
+}
+
+.notes-overview-container .pin-star {
+  font-size: 0.75rem;
+}
+
+.notes-overview-container .note-tags-line {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.notes-overview-container .tag-pill {
+  font-size: 0.66rem;
+  color: #a89880;
+}
+
+.notes-overview-container .note-time-text {
+  font-size: 0.72rem;
+  color: #8c7662;
+}
+
+/* Notebooks 3D Tome Grid */
+.notes-overview-container .notebooks-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.notes-overview-container .notebook-tome-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 10px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(24, 17, 12, 0.35) 0%, rgba(14, 10, 8, 0.18) 100%);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  text-align: center;
+}
+
+.notes-overview-container .notebook-tome-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(212, 175, 55, 0.55);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5), 0 0 14px rgba(212, 175, 55, 0.25);
+}
+
+.notes-overview-container .tome-book-3d {
+  width: 50px;
+  height: 62px;
+  border-radius: 6px 10px 10px 6px;
+  box-shadow: -4px 4px 10px rgba(0, 0, 0, 0.6), inset -2px 0 4px rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+  position: relative;
+  border: 1.5px solid rgba(212, 175, 55, 0.4);
+}
+
+.notes-overview-container .notebook-tome-card.color-blue .tome-book-3d {
+  background: linear-gradient(135deg, #1e3a8a 0%, #1e1b4b 100%);
+}
+
+.notes-overview-container .notebook-tome-card.color-brown .tome-book-3d {
+  background: linear-gradient(135deg, #78350f 0%, #451a03 100%);
+}
+
+.notes-overview-container .notebook-tome-card.color-green .tome-book-3d {
+  background: linear-gradient(135deg, #14532d 0%, #052e16 100%);
+}
+
+.notes-overview-container .notebook-tome-card.color-purple .tome-book-3d {
+  background: linear-gradient(135deg, #581c87 0%, #3b0764 100%);
+}
+
+.notes-overview-container .notebook-tome-card.color-darkblue .tome-book-3d {
+  background: linear-gradient(135deg, #0f172a 0%, #020617 100%);
+}
+
+.notes-overview-container .notebook-tome-card.color-parchment .tome-book-3d {
+  background: linear-gradient(135deg, #78716c 0%, #44403c 100%);
+}
+
+.notes-overview-container .tome-emboss-emblem {
+  font-size: 1.3rem;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+}
+
+.notes-overview-container .notebook-tome-title {
+  font-size: 0.78rem;
+  font-weight: 800;
+  font-family: Georgia, serif;
+  color: #f5ebd9;
+  letter-spacing: 0.04em;
+}
+
+.notes-overview-container .notebook-note-count {
+  font-size: 0.68rem;
+  color: #a89880;
+}
+
+/* Pinned Notes Panel */
+.notes-overview-container .pinned-notes-panel {
+  display: flex;
+  flex-direction: column;
+}
+
+.notes-overview-container .pinned-notes-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.notes-overview-container .pinned-parchment-card {
+  background: linear-gradient(135deg, rgba(245, 235, 217, 0.12) 0%, rgba(235, 220, 198, 0.05) 100%);
+  border: 1px solid rgba(212, 175, 55, 0.22);
+  border-radius: 12px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.notes-overview-container .pinned-parchment-card:hover {
+  background: linear-gradient(135deg, rgba(245, 235, 217, 0.2) 0%, rgba(235, 220, 198, 0.12) 100%);
+  border-color: rgba(212, 175, 55, 0.5);
+  transform: translateY(-2px);
+}
+
+.notes-overview-container .pinned-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.notes-overview-container .card-book-icon {
+  font-size: 0.85rem;
+}
+
+.notes-overview-container .card-pin-icon {
+  font-size: 0.75rem;
+}
+
+.notes-overview-container .pinned-card-title {
+  font-size: 0.84rem;
+  font-weight: 700;
+  font-family: Georgia, serif;
+  color: #f5ebd9;
+  line-height: 1.2;
+}
+
+.notes-overview-container .pinned-card-snippet {
+  font-size: 0.72rem;
+  color: #a89880;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.notes-overview-container .pinned-card-tags {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: auto;
+}
+
+.notes-overview-container .tag-pill-sm {
+  font-size: 0.62rem;
+  color: #e5c158;
+}
+
+.notes-overview-container .notes-quote-ribbon {
+  text-align: center;
+  font-size: 0.78rem;
+  font-style: italic;
+  font-family: Georgia, serif;
+  color: rgba(226, 209, 179, 0.7);
+  padding-top: 8px;
+  border-top: 1px dashed rgba(212, 175, 55, 0.15);
+  margin-top: 6px;
+}
+
+/* ==========================================================================
+   NOTES EDITOR STYLES (Scoped to .notes-editor-container)
+   ========================================================================== */
+
+.notes-editor-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  height: 100%;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.notes-editor-container .editor-top-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.notes-editor-container .back-overview-btn {
+  background: rgba(20, 14, 10, 0.6);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  color: #e2d1b3;
+  padding: 6px 14px;
+  border-radius: 12px;
+  font-size: 0.84rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.notes-editor-container .back-overview-btn:hover {
+  background: rgba(20, 14, 10, 0.85);
+  border-color: #d4af37;
+  color: #f5ebd9;
+}
+
+.notes-editor-container .editor-header-titles {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+/* Editor Split Grid */
+.notes-editor-container .editor-split-grid {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 16px;
+  flex: 1;
+  min-height: 0;
+}
+
+/* All Notes Sidebar */
+.notes-editor-container .all-notes-sidebar {
+  background: linear-gradient(180deg, rgba(20, 14, 10, 0.25) 0%, rgba(16, 12, 9, 0.15) 60%, rgba(10, 8, 6, 0.06) 100%);
+  border: 1px solid rgba(212, 175, 55, 0.22);
+  border-radius: 16px;
+  padding: 14px;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow: hidden;
+}
+
+.notes-editor-container .all-notes-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.notes-editor-container .all-notes-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  font-family: Georgia, serif;
+  color: #f5ebd9;
+}
+
+.notes-editor-container .add-note-btn {
+  background: rgba(212, 175, 55, 0.2);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  color: #f5ebd9;
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.notes-editor-container .notes-search-box {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-radius: 8px;
+  padding: 6px 10px;
+}
+
+.notes-editor-container .search-icon {
+  font-size: 0.8rem;
+}
+
+.notes-editor-container .notes-search-input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #f5ebd9;
+  font-size: 0.78rem;
+  flex: 1;
+}
+
+.notes-editor-container .filter-icon {
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.notes-editor-container .sidebar-notes-scroll {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+  flex: 1;
+  padding-right: 2px;
+}
+
+.notes-editor-container .sidebar-section {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.notes-editor-container .sidebar-section-title {
+  font-size: 0.66rem;
+  font-weight: 700;
+  color: #8c7662;
+  letter-spacing: 0.05em;
+}
+
+.notes-editor-container .sidebar-note-row {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: rgba(245, 235, 217, 0.03);
+  border: 1px solid rgba(212, 175, 55, 0.1);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.notes-editor-container .sidebar-note-row:hover {
+  background: rgba(212, 175, 55, 0.08);
+  border-color: rgba(212, 175, 55, 0.25);
+}
+
+.notes-editor-container .sidebar-note-row.active {
+  background: linear-gradient(90deg, rgba(249, 115, 22, 0.18) 0%, rgba(249, 115, 22, 0.04) 100%);
+  border: 1px solid rgba(249, 115, 22, 0.5);
+  box-shadow: 0 0 10px rgba(249, 115, 22, 0.15);
+}
+
+.notes-editor-container .note-row-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.notes-editor-container .sidebar-note-title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #f5ebd9;
+}
+
+.notes-editor-container .sidebar-pin-icon {
+  font-size: 0.72rem;
+}
+
+.notes-editor-container .sidebar-note-date {
+  font-size: 0.66rem;
+  color: #8c7662;
+}
+
+.notes-editor-container .sidebar-footer {
+  padding-top: 6px;
+  border-top: 1px dashed rgba(212, 175, 55, 0.15);
+}
+
+.notes-editor-container .view-all-notes-link {
+  font-size: 0.74rem;
+  color: #d4af37;
+  cursor: pointer;
+}
+
+/* Ancient Scholar Manuscript Tome Panel */
+.notes-editor-container .manuscript-tome-panel {
+  position: relative;
+  background: linear-gradient(180deg, rgba(245, 235, 217, 0.72) 0%, rgba(235, 220, 198, 0.58) 60%, rgba(220, 202, 178, 0.42) 100%);
+  border: 2px solid rgba(212, 175, 55, 0.4);
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(139, 69, 19, 0.2);
+  display: flex;
+  flex-direction: column;
+  color: #261e17;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  overflow: hidden;
+}
+
+.notes-editor-container .binder-rings {
+  position: absolute;
+  top: 40px;
+  left: 6px;
+  bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  z-index: 10;
+}
+
+.notes-editor-container .ring-loop {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 3px solid #78350f;
+  background: #261e17;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Tome Header Bar */
+.notes-editor-container .tome-header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px 12px 30px;
+  border-bottom: 1px solid rgba(139, 69, 19, 0.2);
+  background: rgba(245, 235, 217, 0.4);
+}
+
+.notes-editor-container .tome-title-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.notes-editor-container .tome-note-title {
+  font-size: 0.92rem;
+  font-weight: 800;
+  font-family: Georgia, serif;
+  color: #261e17;
+  letter-spacing: 0.03em;
+}
+
+.notes-editor-container .tome-star {
+  color: #b45309;
+  font-size: 0.85rem;
+}
+
+.notes-editor-container .tome-edited-time {
+  font-size: 0.72rem;
+  color: #78350f;
+}
+
+.notes-editor-container .auto-saved-badge {
+  font-size: 0.7rem;
+  color: #15803d;
+  font-weight: 600;
+}
+
+.notes-editor-container .tome-actions-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.notes-editor-container .tome-action-btn {
+  background: rgba(120, 53, 15, 0.1);
+  border: 1px solid rgba(120, 53, 15, 0.25);
+  color: #451a03;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* Formatting Toolbar */
+.notes-editor-container .formatting-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 20px 6px 30px;
+  border-bottom: 1px solid rgba(139, 69, 19, 0.15);
+  background: rgba(245, 235, 217, 0.3);
+}
+
+.notes-editor-container .toolbar-select {
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(120, 53, 15, 0.25);
+  border-radius: 4px;
+  font-size: 0.75rem;
+  color: #261e17;
+  padding: 2px 6px;
+}
+
+.notes-editor-container .toolbar-divider {
+  width: 1px;
+  height: 14px;
+  background: rgba(120, 53, 15, 0.2);
+}
+
+.notes-editor-container .toolbar-btn {
+  background: transparent;
+  border: none;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #451a03;
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+
+.notes-editor-container .toolbar-btn:hover {
+  background: rgba(120, 53, 15, 0.15);
+}
+
+/* Manuscript Parchment Page Body */
+.notes-editor-container .parchment-page-body {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 20px;
+  padding: 24px 24px 24px 36px;
+  flex: 1;
+  overflow-y: auto;
+  position: relative;
+}
+
+.notes-editor-container .manuscript-text-column {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.notes-editor-container .manuscript-heading {
+  font-size: 1.6rem;
+  font-weight: 800;
+  font-family: Georgia, serif;
+  color: #261e17;
+  letter-spacing: 0.02em;
+}
+
+.notes-editor-container .manuscript-intro {
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: #451a03;
+  font-family: Georgia, serif;
+}
+
+.notes-editor-container .manuscript-section {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.notes-editor-container .section-heading {
+  font-size: 1rem;
+  font-weight: 800;
+  font-family: Georgia, serif;
+  color: #78350f;
+  letter-spacing: 0.03em;
+}
+
+.notes-editor-container .section-subtext {
+  font-size: 0.8rem;
+  font-style: italic;
+  color: #78350f;
+}
+
+.notes-editor-container .manuscript-bullet-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-left: 6px;
+  font-size: 0.85rem;
+  color: #261e17;
+}
+
+.notes-editor-container .bullet-star {
+  color: #b45309;
+  font-weight: 700;
+}
+
+.notes-editor-container .section-ornament-divider {
+  text-align: center;
+  font-size: 0.72rem;
+  color: rgba(120, 53, 15, 0.4);
+  margin-top: 10px;
+}
+
+/* Right Manuscript Cards Column */
+.notes-editor-container .manuscript-side-column {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.notes-editor-container .key-goal-parchment-card {
+  position: relative;
+  background: rgba(255, 251, 235, 0.8);
+  border: 1px solid rgba(180, 83, 9, 0.3);
+  border-radius: 10px;
+  padding: 14px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.notes-editor-container .pin-tack {
+  position: absolute;
+  top: -8px;
+  right: 12px;
+  font-size: 0.9rem;
+}
+
+.notes-editor-container .key-goal-title {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #78350f;
+  letter-spacing: 0.05em;
+}
+
+.notes-editor-container .key-goal-body {
+  font-size: 0.8rem;
+  font-style: italic;
+  color: #451a03;
+  line-height: 1.4;
+  margin-top: 4px;
+}
+
+.notes-editor-container .photo-attachment-frame {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 4px solid #ffffff;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+  transform: rotate(1.5deg);
+}
+
+.notes-editor-container .photo-attachment-img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  display: block;
+}
+
+.notes-editor-container .side-tags-box {
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(120, 53, 15, 0.2);
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.notes-editor-container .side-box-title {
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: #78350f;
+  letter-spacing: 0.05em;
+}
+
+.notes-editor-container .side-tags-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.notes-editor-container .side-tag-pill {
+  background: rgba(120, 53, 15, 0.1);
+  border: 1px solid rgba(120, 53, 15, 0.2);
+  color: #451a03;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.68rem;
+  font-weight: 600;
+}
+
+.notes-editor-container .side-attachments-box {
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(120, 53, 15, 0.2);
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.notes-editor-container .attachments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.notes-editor-container .attachment-item-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.74rem;
+  color: #261e17;
+}
+
+.notes-editor-container .att-name {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.notes-editor-container .att-download {
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.notes-editor-container .feather-quill-ornament {
+  position: absolute;
+  bottom: 20px;
+  right: 16px;
+  font-size: 2rem;
+  opacity: 0.7;
 }

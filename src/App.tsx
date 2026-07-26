@@ -5,10 +5,14 @@ import { Sidebar } from "./components/Sidebar";
 import { GreetingSection } from "./components/GreetingSection";
 import { TasksPage } from "./components/tasks/TasksPage";
 import { ProjectsPage } from "./components/projects/ProjectsPage";
+import { GymPage } from "./components/gym/GymPage";
+import { NotesPage } from "./components/notes/NotesPage";
 import { WindowControlsOverlay } from "./components/WindowControlsOverlay";
 import { getBackgroundForTime } from "./utils/timePeriod";
 import taskBgImg from "./assets/backgrounds/taskbg.png";
 import projectBgImg from "./assets/backgrounds/projectbg.png";
+import gymBgImg from "./assets/backgrounds/duringworkout.jpeg";
+import studyBgImg from "./assets/backgrounds/study.png";
 import "./App.css";
 
 export function App() {
@@ -55,9 +59,17 @@ export function App() {
     return () => clearInterval(interval);
   }, []);
 
-  // Active wallpaper: taskbg.png for Tasks, projectbg.png for Projects, dynamic system time wallpaper for Home/others
+  // Active wallpaper mapping
   const currentWallpaper =
-    activeTab === "tasks" ? taskBgImg : activeTab === "projects" ? projectBgImg : bgUrl;
+    activeTab === "tasks"
+      ? taskBgImg
+      : activeTab === "projects"
+      ? projectBgImg
+      : activeTab === "gym"
+      ? gymBgImg
+      : activeTab === "notes"
+      ? studyBgImg
+      : bgUrl;
 
   return (
     <div className="app-container">
@@ -76,6 +88,8 @@ export function App() {
         {activeTab === "home" && <GreetingSection />}
         {activeTab === "tasks" && <TasksPage />}
         {activeTab === "projects" && <ProjectsPage />}
+        {activeTab === "gym" && <GymPage />}
+        {activeTab === "notes" && <NotesPage />}
       </main>
 
       {/* Top-Right ESC Window Controls Overlay */}
