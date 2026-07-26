@@ -1,0 +1,122 @@
+import {
+  WordCardItem,
+  AnkiDeckItem,
+  JapaneseProgressData,
+} from "../types/japanese";
+
+export const MOCK_JAPANESE_PROGRESS: JapaneseProgressData = {
+  level: 8,
+  streakDays: 12,
+  currentXp: 680,
+  targetXp: 1000,
+  jlptLevel: "JLPT N5",
+  proverbKanji: "継続は力なり。",
+  proverbRomaji: "Keizoku wa chikara nari.",
+  proverbEnglish: "Consistency is power.",
+  todayJourney: {
+    vocabCurrent: 18,
+    vocabTarget: 25,
+    kanjiCurrent: 6,
+    kanjiTarget: 10,
+    grammarCurrent: 2,
+    grammarTarget: 3,
+    reviewDue: 31,
+  },
+  dailyGoal: {
+    percentCompleted: 72,
+    vocabLearned: 124,
+    kanjiLearned: 48,
+    grammarLessons: 16,
+    reviewDueToday: 31,
+  },
+};
+
+export const MOCK_ANKI_DECKS: AnkiDeckItem[] = [
+  {
+    id: "deck-vocab",
+    title: "N5 Vocabulary",
+    subtitle: "N5 - Vocabulary",
+    cardCount: 90,
+    iconSymbol: "📘",
+    badgeColor: "purple",
+  },
+  {
+    id: "deck-nouns",
+    title: "N5 Nouns",
+    subtitle: "N5 - Nouns",
+    cardCount: 90,
+    iconSymbol: "名",
+    badgeColor: "green",
+  },
+  {
+    id: "deck-verbs",
+    title: "N5 Verbs",
+    subtitle: "N5 - Verbs",
+    cardCount: 90,
+    iconSymbol: "漢",
+    badgeColor: "pink",
+  },
+  {
+    id: "deck-adjectives",
+    title: "N5 Adjectives",
+    subtitle: "N5 - Adjectives",
+    cardCount: 90,
+    iconSymbol: "い",
+    badgeColor: "amber",
+  },
+  {
+    id: "deck-kanji",
+    title: "N5 Kanji",
+    subtitle: "N5 - Kanji",
+    cardCount: 90,
+    iconSymbol: "漢",
+    badgeColor: "pink",
+  },
+  {
+    id: "deck-grammar",
+    title: "N5 Grammar",
+    subtitle: "N5 - Grammar",
+    cardCount: 90,
+    iconSymbol: "⛩️",
+    badgeColor: "blue",
+  },
+];
+
+export const MOCK_TODAYS_WORDS: WordCardItem[] = [
+  {
+    id: "word-1",
+    kanji: "食べる",
+    kana: "たべる",
+    romaji: "taberu",
+    meaning: "to eat",
+    partOfSpeech: "Verb",
+    pillColor: "purple",
+  },
+  {
+    id: "word-2",
+    kanji: "学校",
+    kana: "がっこう",
+    romaji: "gakkō",
+    meaning: "school",
+    partOfSpeech: "Noun",
+    pillColor: "pink",
+  },
+  {
+    id: "word-3",
+    kanji: "大きい",
+    kana: "おおきい",
+    romaji: "ookii",
+    meaning: "big",
+    partOfSpeech: "Adj.",
+    pillColor: "green",
+  },
+  {
+    id: "word-4",
+    kanji: "行く",
+    kana: "いく",
+    romaji: "iku",
+    meaning: "to go",
+    partOfSpeech: "Verb",
+    pillColor: "purple",
+  },
+];
