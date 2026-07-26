@@ -3,11 +3,16 @@ import { getCurrentWindow } from "@tauri-apps/api/window";
 import { Background } from "./components/Background";
 import { Sidebar } from "./components/Sidebar";
 import { GreetingSection } from "./components/GreetingSection";
+import { TasksPage } from "./components/tasks/TasksPage";
+import { ProjectsPage } from "./components/projects/ProjectsPage";
 import { WindowControlsOverlay } from "./components/WindowControlsOverlay";
 import { getBackgroundForTime } from "./utils/timePeriod";
+import taskBgImg from "./assets/backgrounds/taskbg.png";
+import projectBgImg from "./assets/backgrounds/projectbg.png";
 import "./App.css";
 
 export function App() {
+  const [activeTab, setActiveTab] = useState<string>("home");
   const [isOverlayVisible, setIsOverlayVisible] = useState<boolean>(false);
   const [isSidebarHovered, setIsSidebarHovered] = useState<boolean>(false);
   const [bgUrl, setBgUrl] = useState<string>(() => getBackgroundForTime());
@@ -50,17 +55,27 @@ export function App() {
     return () => clearInterval(interval);
   }, []);
 
+  // Active wallpaper: taskbg.png for Tasks, projectbg.png for Projects, dynamic system time wallpaper for Home/others
+  const currentWallpaper =
+    activeTab === "tasks" ? taskBgImg : activeTab === "projects" ? projectBgImg : bgUrl;
+
   return (
     <div className="app-container">
       {/* Background wallpaper with smooth crossfade */}
-      <Background bgUrl={bgUrl} />
+      <Background bgUrl={currentWallpaper} />
 
       {/* Expandable translucent dark sidebar */}
-      <Sidebar onHoverChange={(hovered) => setIsSidebarHovered(hovered)} />
+      <Sidebar
+        activeTab={activeTab}
+        onSelectTab={(tabId) => setActiveTab(tabId)}
+        onHoverChange={(hovered) => setIsSidebarHovered(hovered)}
+      />
 
-      {/* Main Home Content Area */}
-      <main className="main-content">
-        <GreetingSection isFaded={isSidebarHovered} />
+      {/* Main Content Area - Generically adjusts layout offset on sidebar hover */}
+      <main className={`main-content ${isSidebarHovered ? "sidebar-expanded" : ""}`}>
+        {activeTab === "home" && <GreetingSection />}
+        {activeTab === "tasks" && <TasksPage />}
+        {activeTab === "projects" && <ProjectsPage />}
       </main>
 
       {/* Top-Right ESC Window Controls Overlay */}

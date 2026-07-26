@@ -3,6 +3,7 @@ export interface Quote {
 }
 
 export const quotes: Quote[] = [
+  { text: "As long as I live, the possibilities are endless..." },
   { text: "A new day. A new chance to be stronger than yesterday." },
   { text: "Small progress is still progress." },
   { text: "Discipline today creates freedom tomorrow." },

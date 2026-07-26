@@ -15,16 +15,12 @@ export function getGreetingTimeText(date: Date = new Date()): string {
   return "Good Night,";
 }
 
-interface GreetingSectionProps {
-  isFaded?: boolean;
-}
-
-export function GreetingSection({ isFaded = false }: GreetingSectionProps) {
+export function GreetingSection() {
   const [quote] = useState(() => getRandomQuote());
   const greeting = getGreetingTimeText();
 
   return (
-    <div className={`greeting-container ${isFaded ? "faded" : ""}`}>
+    <div className="greeting-container">
       <div className="greeting-text-group">
         <h1 className="greeting-salutation">{greeting}</h1>
         <h2 className="greeting-username">Sudarshan!</h2>
