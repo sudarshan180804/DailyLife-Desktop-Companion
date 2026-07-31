@@ -1,9 +1,5 @@
-import {
-  MOCK_EXERCISES,
-  MOCK_BODY_STATS,
-  MOCK_GYM_SUMMARY,
-  WEEKLY_SCHEDULE,
-} from "../../data/gymData";
+import { useGymStore } from "../../modules/gym";
+import { useProfileStore } from "../../stores/profileStore";
 import { StarIcon, FlameIcon } from "../Icons";
 
 interface GymOverviewProps {
@@ -11,8 +7,12 @@ interface GymOverviewProps {
 }
 
 export function GymOverview({ onViewFullWorkout }: GymOverviewProps) {
-  const completedExercisesCount = MOCK_EXERCISES.filter((e) => e.completed).length;
-  const totalExercisesCount = MOCK_EXERCISES.length;
+  const { exercises, bodyStats, summary, schedule, toggleExercise } =
+    useGymStore();
+  const { profile } = useProfileStore();
+
+  const completedExercisesCount = exercises.filter((e) => e.completed).length;
+  const totalExercisesCount = exercises.length;
 
   return (
     <div className="gym-overview-container">
@@ -21,15 +21,51 @@ export function GymOverview({ onViewFullWorkout }: GymOverviewProps) {
         <div className="gym-header-left">
           <div className="gym-title-row">
             <div className="gym-crest-badge">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#d4af37" strokeWidth="2">
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#d4af37"
+                strokeWidth="2"
+              >
                 <path d="M6.5 6.5l11 11M21 21l-1 1M3 3l1 1M18 4l2 2M4 18l2 2M15 3l4.5 4.5M6.5 14.5L11 19M4.5 6.5L9 11" />
               </svg>
             </div>
             <div>
               <h1 className="gym-page-title">Gym</h1>
-              <p className="gym-quote-text">Train your body. Strengthen your will.</p>
+              <p className="gym-quote-text">
+                Train your body. Strengthen your will.
+              </p>
             </div>
           </div>
+        </div>
+
+        <div className="gym-header-right" style={{ display: "flex", gap: "8px" }}>
+          <button
+            className="new-task-action-btn btn-secondary-note"
+            onClick={async () => {
+              const notesStore = (await import("../../modules/notes")).notesStore;
+              await notesStore.createNote({
+                templateId: "template-gym",
+                notebookId: "nb-personal",
+                collections: ["Gym"],
+                tags: ["#GymLog"],
+              });
+            }}
+            title="Log Workout Note"
+            style={{
+              background: "linear-gradient(135deg, #a855f7 0%, #7e22ce 100%)",
+              border: "none",
+              color: "#fff",
+              fontWeight: 800,
+              padding: "6px 14px",
+              borderRadius: "8px",
+              cursor: "pointer",
+            }}
+          >
+            <span>🏋️ + Workout Note</span>
+          </button>
         </div>
       </div>
 
@@ -42,18 +78,29 @@ export function GymOverview({ onViewFullWorkout }: GymOverviewProps) {
               <div className="shield-icon-small">🛡️</div>
               <div>
                 <h2 className="training-routine-title">PUSH DAY</h2>
-                <span className="training-focus-subtitle">Focus: Chest, Shoulders, Triceps</span>
+                <span className="training-focus-subtitle">
+                  Focus: Chest, Shoulders, Triceps
+                </span>
               </div>
             </div>
             <div className="training-progress-block">
               <span className="progress-fraction-text">
-                Progress <strong className="gold-num">{completedExercisesCount} / {totalExercisesCount}</strong>
+                Progress{" "}
+                <strong className="gold-num">
+                  {completedExercisesCount} / {totalExercisesCount}
+                </strong>
               </span>
               <div className="routine-progress-bar-bg">
                 <div
                   className="routine-progress-bar-fill"
                   style={{
-                    width: `${Math.round((completedExercisesCount / totalExercisesCount) * 100)}%`,
+                    width:
+                      totalExercisesCount > 0
+                        ? `${Math.round(
+                            (completedExercisesCount / totalExercisesCount) *
+                              100
+                          )}%`
+                        : "0%",
                   }}
                 />
               </div>
@@ -62,19 +109,33 @@ export function GymOverview({ onViewFullWorkout }: GymOverviewProps) {
 
           {/* Exercise List */}
           <div className="overview-exercise-list">
-            {MOCK_EXERCISES.map((ex) => (
-              <div key={ex.id} className={`exercise-overview-row ${ex.completed ? "completed" : ""}`}>
+            {exercises.map((ex) => (
+              <div
+                key={ex.id}
+                className={`exercise-overview-row ${
+                  ex.completed ? "completed" : ""
+                }`}
+                onClick={() => toggleExercise(ex.id)}
+                style={{ cursor: "pointer" }}
+              >
                 <div className="ex-icon-box">🏋️</div>
                 <div className="ex-main-info">
                   <span className="ex-name">{ex.name}</span>
                   <span className="ex-sets-reps">
-                    {ex.sets} × {ex.reps.split(" ")[0]} &nbsp;•&nbsp; <span className="ex-weight">{ex.weight || "Bodyweight"}</span>
+                    {ex.sets} × {ex.reps.split(" ")[0]} &nbsp;•&nbsp;{" "}
+                    <span className="ex-weight">
+                      {ex.weight || "Bodyweight"}
+                    </span>
                   </span>
                 </div>
 
                 <div className="ex-reward-block">
                   <span className="ex-xp-badge">+{ex.xpReward} XP</span>
-                  <div className={`ex-check-circle ${ex.completed ? "checked" : ""}`}>
+                  <div
+                    className={`ex-check-circle ${
+                      ex.completed ? "checked" : ""
+                    }`}
+                  >
                     {ex.completed ? "✓" : ""}
                   </div>
                 </div>
@@ -84,7 +145,10 @@ export function GymOverview({ onViewFullWorkout }: GymOverviewProps) {
 
           {/* View Full Workout Action Button */}
           <div className="card-footer-action">
-            <button className="view-full-workout-btn" onClick={onViewFullWorkout}>
+            <button
+              className="view-full-workout-btn"
+              onClick={onViewFullWorkout}
+            >
               <span>View Full Workout</span>
               <span className="btn-arrow">&gt;</span>
             </button>
@@ -101,7 +165,7 @@ export function GymOverview({ onViewFullWorkout }: GymOverviewProps) {
             </div>
 
             <div className="weekly-schedule-row">
-              {WEEKLY_SCHEDULE.map((item, idx) => (
+              {schedule.map((item, idx) => (
                 <div key={idx} className={`day-node status-${item.status}`}>
                   <span className="day-name">{item.day}</span>
                   <div className="day-badge-circle">
@@ -109,7 +173,9 @@ export function GymOverview({ onViewFullWorkout }: GymOverviewProps) {
                     {item.status === "rest" && "🌙"}
                     {item.status === "today" && "🎯"}
                   </div>
-                  {item.status === "today" && <span className="today-label">Today</span>}
+                  {item.status === "today" && (
+                    <span className="today-label">Today</span>
+                  )}
                 </div>
               ))}
             </div>
@@ -126,7 +192,7 @@ export function GymOverview({ onViewFullWorkout }: GymOverviewProps) {
                 </div>
 
                 <div className="stat-bars-list">
-                  {MOCK_BODY_STATS.map((stat, idx) => (
+                  {bodyStats.map((stat, idx) => (
                     <div key={idx} className="stat-bar-item">
                       <div className="stat-label-row">
                         <span className="stat-name">{stat.name}</span>
@@ -149,17 +215,19 @@ export function GymOverview({ onViewFullWorkout }: GymOverviewProps) {
                   <div className="lion-emblem">🦁</div>
                 </div>
                 <span className="rank-title-label">Warrior Rank</span>
-                <h4 className="rank-name">{MOCK_GYM_SUMMARY.warriorRank}</h4>
+                <h4 className="rank-name">{summary.warriorRank}</h4>
                 <div className="rank-xp-bar-bg">
                   <div
                     className="rank-xp-bar-fill"
                     style={{
-                      width: `${(MOCK_GYM_SUMMARY.warriorRankXp / MOCK_GYM_SUMMARY.warriorRankMaxXp) * 100}%`,
+                      width: `${
+                        (summary.warriorRankXp / summary.warriorRankMaxXp) * 100
+                      }%`,
                     }}
                   />
                 </div>
                 <span className="rank-xp-text">
-                  {MOCK_GYM_SUMMARY.warriorRankXp} / {MOCK_GYM_SUMMARY.warriorRankMaxXp} XP
+                  {summary.warriorRankXp} / {summary.warriorRankMaxXp} XP
                 </span>
               </div>
             </div>
@@ -175,21 +243,32 @@ export function GymOverview({ onViewFullWorkout }: GymOverviewProps) {
           </div>
           <div className="summary-info">
             <span className="summary-title">Current Streak</span>
-            <span className="summary-val highlight-orange">{MOCK_GYM_SUMMARY.streakDays} Days</span>
+            <span className="summary-val highlight-orange">
+              {profile.stats.streakDays || summary.streakDays} Days
+            </span>
             <span className="summary-sub">Keep it up!</span>
           </div>
         </div>
 
         <div className="summary-card-parchment">
           <div className="summary-icon-box swords-glow">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#d4af37" strokeWidth="2">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#d4af37"
+              strokeWidth="2"
+            >
               <path d="M14.5 17.5L3 6V3h3l11.5 11.5M13 19l2 2 4-4-2-2" />
               <path d="M9.5 17.5L21 6V3h-3L6.5 14.5M11 19l-2 2-4-4 2-2" />
             </svg>
           </div>
           <div className="summary-info">
             <span className="summary-title">This Week</span>
-            <span className="summary-val">{MOCK_GYM_SUMMARY.weeklyWorkoutsCount} Workouts</span>
+            <span className="summary-val">
+              {summary.weeklyWorkoutsCount} Workouts
+            </span>
             <span className="summary-sub">On fire!</span>
           </div>
         </div>
@@ -200,7 +279,9 @@ export function GymOverview({ onViewFullWorkout }: GymOverviewProps) {
           </div>
           <div className="summary-info">
             <span className="summary-title">Total XP Earned</span>
-            <span className="summary-val highlight-gold">{MOCK_GYM_SUMMARY.totalXpEarned.toLocaleString()} XP</span>
+            <span className="summary-val highlight-gold">
+              {(profile?.totalXP ?? 0).toLocaleString()} XP
+            </span>
             <span className="summary-sub">Keep pushing forward.</span>
           </div>
         </div>

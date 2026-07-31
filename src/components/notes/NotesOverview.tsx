@@ -1,16 +1,153 @@
-import {
-  MOCK_NOTEBOOKS,
-  MOCK_NOTES,
-  MOCK_NOTES_SUMMARY,
-} from "../../data/notesData";
-import { FlameIcon, StarIcon } from "../Icons";
+import { useState, useRef } from "react";
+import { useNotesStore } from "../../modules/notes";
+import { useProfileStore } from "../../stores/profileStore";
+import { nativeDialogService } from "../../services/nativeDialogService";
+import { NotebookItem, NoteTemplate } from "../../modules/notes/types";
 
 interface NotesOverviewProps {
   onSelectNote: (noteId: string) => void;
 }
 
 export function NotesOverview({ onSelectNote }: NotesOverviewProps) {
-  const pinnedNotes = MOCK_NOTES.filter((n) => n.pinned);
+  const {
+    notes,
+    notebooks,
+    folders,
+    allCollections,
+    allTags,
+    templates,
+    summary,
+    getNotes,
+    getOrCreateDailyJournal,
+    getJournalDateNav,
+    createNote,
+    createNotebook,
+    deleteNotebook,
+    createFolder,
+    deleteFolder,
+    restoreNote,
+    deleteNote,
+    archiveNote,
+    togglePin,
+    toggleFavorite,
+    importMarkdownNote,
+  } = useNotesStore();
+
+  const { profile } = useProfileStore();
+
+  const searchInputRef = useRef<HTMLInputElement>(null);
+
+  // Filter States
+  const [activeView, setActiveView] = useState<
+    "all" | "journal" | "favorites" | "pinned" | "recent" | "frequently_edited" | "recently_viewed" | "archived" | "trash"
+  >("all");
+  const [selectedNotebookId, setSelectedNotebookId] = useState<string>("all");
+  const [selectedFolderId, setSelectedFolderId] = useState<string>("all");
+  const [selectedCollection, setSelectedCollection] = useState<string>("all");
+  const [selectedTag, setSelectedTag] = useState<string>("");
+  const [searchQuery, setSearchQuery] = useState<string>("");
+
+  // Daily Journal Date Navigation
+  const [journalDate, setJournalDate] = useState<string>(
+    new Date().toISOString().split("T")[0]
+  );
+  const journalNav = getJournalDateNav(journalDate);
+
+  // Modals
+  const [isNotebookModalOpen, setIsNotebookModalOpen] = useState<boolean>(false);
+  const [isFolderModalOpen, setIsFolderModalOpen] = useState<boolean>(false);
+  const [isImportModalOpen, setIsImportModalOpen] = useState<boolean>(false);
+  const [isTemplateModalOpen, setIsTemplateModalOpen] = useState<boolean>(false);
+
+  // Form states
+  const [newNbTitle, setNewNbTitle] = useState<string>("");
+  const [newNbColor, setNewNbColor] = useState<NotebookItem["color"]>("purple");
+  const [newNbIcon, setNewNbIcon] = useState<string>("🔮");
+  const [newFolderName, setNewFolderName] = useState<string>("");
+  const [newFolderIcon, setNewFolderIcon] = useState<string>("📁");
+
+  // Import state
+  const [importText, setImportText] = useState<string>("");
+  const [importTitle, setImportTitle] = useState<string>("");
+
+  // New Note Template Selection State
+  const [selectedTemplateId, setSelectedTemplateId] = useState<string>("template-blank");
+
+  const filteredNotes = getNotes({
+    view: activeView,
+    notebookId: selectedNotebookId,
+    folderId: selectedFolderId,
+    collection: selectedCollection,
+    tag: selectedTag,
+    search: searchQuery,
+  });
+
+  const handleCreateNoteWithTemplate = async (tmpl?: NoteTemplate) => {
+    const templateId = tmpl?.id || selectedTemplateId;
+    const created = await createNote({
+      templateId,
+      notebookId: selectedNotebookId !== "all" ? selectedNotebookId : "nb-personal",
+      collections: selectedCollection !== "all" ? [selectedCollection] : ["DailyLife"],
+    });
+    setIsTemplateModalOpen(false);
+    onSelectNote(created.id);
+  };
+
+  const handleOpenDailyJournal = async (targetDateStr?: string) => {
+    const dStr = targetDateStr || journalDate;
+    const journal = await getOrCreateDailyJournal(dStr);
+    onSelectNote(journal.id);
+  };
+
+  const handleSaveNotebook = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newNbTitle.trim()) return;
+    await createNotebook(newNbTitle.trim(), newNbColor, newNbIcon || "🔮");
+    setNewNbTitle("");
+    setIsNotebookModalOpen(false);
+  };
+
+  const handleSaveFolder = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newFolderName.trim()) return;
+    await createFolder(newFolderName.trim(), newFolderIcon || "📁");
+    setNewFolderName("");
+    setIsFolderModalOpen(false);
+  };
+
+  const handlePickImportFile = async () => {
+    const file = await nativeDialogService.pickFile(
+      "Select Markdown or Text Note to Import",
+      "Markdown & Text Files (*.md, *.txt)",
+      ["md", "txt"]
+    );
+    if (file) {
+      try {
+        const text = await window.fetch(nativeDialogService.formatAssetUrl(file)).then((r) => r.text());
+        const fileName = file.split(/[\\/]/).pop()?.replace(/\.(md|txt)$/i, "") || "Imported Note";
+        const created = await importMarkdownNote(fileName, text);
+        onSelectNote(created.id);
+        setIsImportModalOpen(false);
+      } catch (err) {
+        const str = window.prompt("Paste Markdown text content to import:");
+        if (str) {
+          const created = await importMarkdownNote("Imported Note", str);
+          onSelectNote(created.id);
+          setIsImportModalOpen(false);
+        }
+      }
+    }
+  };
+
+  const handleImportSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!importText.trim()) return;
+    const created = await importMarkdownNote(importTitle.trim() || "Imported Note", importText.trim());
+    onSelectNote(created.id);
+    setIsImportModalOpen(false);
+  };
+
+  const currentXpValue = typeof profile?.currentXP === "number" ? profile.currentXP : 0;
 
   return (
     <div className="notes-overview-container">
@@ -18,34 +155,31 @@ export function NotesOverview({ onSelectNote }: NotesOverviewProps) {
       <div className="notes-header-bar">
         <div className="notes-title-row">
           <div className="notes-crest-badge">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#d4af37" strokeWidth="2">
-              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
-              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
-            </svg>
+            <span>📚</span>
           </div>
           <div>
-            <h1 className="notes-page-title">NOTES</h1>
+            <h1 className="notes-page-title">CONNECTED KNOWLEDGE HUB</h1>
             <p className="notes-quote-text">Knowledge collected becomes power.</p>
           </div>
         </div>
 
         <div className="notes-stats-row">
           <div className="notes-stat-badge">
-            <FlameIcon size={16} />
-            <span className="stat-val">{MOCK_NOTES_SUMMARY.streak}</span>
+            <span className="stat-icon">🔥</span>
+            <span className="stat-val">{profile?.stats?.streakDays || summary.streak}</span>
             <span className="stat-lbl">STREAK</span>
           </div>
 
           <div className="notes-stat-badge">
             <span className="stat-icon">📖</span>
-            <span className="stat-val">{MOCK_NOTES_SUMMARY.totalNotes}</span>
+            <span className="stat-val">{notes.filter((n) => !n.isTrashed).length}</span>
             <span className="stat-lbl">NOTES</span>
           </div>
 
           <div className="notes-stat-badge">
-            <StarIcon size={16} />
-            <span className="stat-val gold-txt">{MOCK_NOTES_SUMMARY.totalXp.toLocaleString()}</span>
-            <span className="stat-lbl">TOTAL XP</span>
+            <span className="stat-icon">⭐</span>
+            <span className="stat-val gold-txt">{currentXpValue.toLocaleString()}</span>
+            <span className="stat-lbl">XP</span>
           </div>
 
           <div className="user-profile-badge-small">
@@ -53,105 +187,719 @@ export function NotesOverview({ onSelectNote }: NotesOverviewProps) {
               <span className="avatar-img-fallback">🧙‍♂️</span>
             </div>
             <div className="profile-badge-info">
-              <span className="profile-name-sm">Sudarshan</span>
-              <span className="profile-lv-sm">Lv. 24 • 1,250 / 2,000 XP</span>
+              <span className="profile-name-sm">{profile?.name || "Scholar"}</span>
+              <span className="profile-lv-sm">
+                Lv. {profile?.level || 1} • {currentXpValue} XP
+              </span>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Main Grid: Left Recent Notes + Right Notebooks */}
-      <div className="notes-main-grid">
-        {/* Left Column: Recent Notes Panel */}
-        <div className="notes-panel recent-notes-panel">
-          <div className="panel-header-row">
-            <h2 className="panel-title">RECENT NOTES</h2>
-            <span className="view-all-link">View All &gt;</span>
-          </div>
-
-          <div className="recent-notes-list">
-            {MOCK_NOTES.map((note) => (
-              <div
-                key={note.id}
-                className="recent-note-row"
-                onClick={() => onSelectNote(note.id)}
-              >
-                <div className="note-icon-box">📖</div>
-                <div className="note-info-block">
-                  <div className="note-title-line">
-                    <span className="note-row-title">{note.title}</span>
-                    {note.pinned && <span className="pin-star">📌</span>}
-                  </div>
-                  <div className="note-tags-line">
-                    {note.tags.slice(0, 3).map((tag, idx) => (
-                      <span key={idx} className="tag-pill">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-                <span className="note-time-text">{note.lastEdited}</span>
-              </div>
-            ))}
-          </div>
+      {/* Control Bar: Views Tabs + Search Bar + Quick Actions */}
+      <div className="notes-control-bar">
+        <div className="notes-view-tabs">
+          <button
+            className={`view-tab-btn ${activeView === "all" ? "active" : ""}`}
+            onClick={() => {
+              setActiveView("all");
+              setSelectedNotebookId("all");
+              setSelectedTag("");
+            }}
+          >
+            📚 All Notes
+          </button>
+          <button
+            className={`view-tab-btn ${activeView === "journal" ? "active" : ""}`}
+            onClick={() => setActiveView("journal")}
+          >
+            📖 Daily Journal
+          </button>
+          <button
+            className={`view-tab-btn ${activeView === "favorites" ? "active" : ""}`}
+            onClick={() => setActiveView("favorites")}
+          >
+            ♥ Favorites
+          </button>
+          <button
+            className={`view-tab-btn ${activeView === "pinned" ? "active" : ""}`}
+            onClick={() => setActiveView("pinned")}
+          >
+            📌 Pinned
+          </button>
+          <button
+            className={`view-tab-btn ${activeView === "recent" ? "active" : ""}`}
+            onClick={() => setActiveView("recent")}
+          >
+            🕒 Recent
+          </button>
+          <button
+            className={`view-tab-btn ${activeView === "frequently_edited" ? "active" : ""}`}
+            onClick={() => setActiveView("frequently_edited")}
+          >
+            ✏️ Freq. Edited
+          </button>
+          <button
+            className={`view-tab-btn ${activeView === "recently_viewed" ? "active" : ""}`}
+            onClick={() => setActiveView("recently_viewed")}
+          >
+            👀 Rec. Viewed
+          </button>
+          <button
+            className={`view-tab-btn ${activeView === "archived" ? "active" : ""}`}
+            onClick={() => setActiveView("archived")}
+          >
+            📦 Archive
+          </button>
+          <button
+            className={`view-tab-btn ${activeView === "trash" ? "active" : ""}`}
+            onClick={() => setActiveView("trash")}
+          >
+            🗑️ Trash
+          </button>
         </div>
 
-        {/* Right Column: Notebooks Grid Panel */}
-        <div className="notes-panel notebooks-panel">
-          <div className="panel-header-row">
-            <h2 className="panel-title">NOTEBOOKS</h2>
-            <button className="new-notebook-btn">New Notebook +</button>
-          </div>
+        <div className="notes-search-control">
+          <span className="search-icon">🔍</span>
+          <input
+            ref={searchInputRef}
+            type="text"
+            className="notes-global-search-input"
+            placeholder="Search titles, text, tags, collections... (Ctrl+Shift+F)"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          {searchQuery && (
+            <button className="clear-search-btn" onClick={() => setSearchQuery("")}>
+              ✕
+            </button>
+          )}
+        </div>
 
-          <div className="notebooks-grid">
-            {MOCK_NOTEBOOKS.map((nb) => (
-              <div key={nb.id} className={`notebook-tome-card color-${nb.color}`}>
-                <div className="tome-book-3d">
-                  <div className="tome-emboss-emblem">{nb.iconSymbol}</div>
-                </div>
-                <span className="notebook-tome-title">{nb.title}</span>
-                <span className="notebook-note-count">{nb.noteCount} notes</span>
-              </div>
-            ))}
-          </div>
+        <div className="notes-action-buttons">
+          <button
+            className="btn-quick-note"
+            onClick={() => setIsTemplateModalOpen(true)}
+            title="Create Note from Template"
+          >
+            <span>+</span> New Note / Template
+          </button>
+
+          <button
+            className="btn-quick-note btn-journal-quick"
+            onClick={() => handleOpenDailyJournal()}
+            title="Today's Journal"
+          >
+            📖 Today's Journal
+          </button>
+
+          <button
+            className="btn-import-note"
+            onClick={() => setIsImportModalOpen(true)}
+            title="Import Markdown Note"
+          >
+            📥 Import
+          </button>
         </div>
       </div>
 
-      {/* Bottom Panel: Pinned Notes */}
-      <div className="notes-panel pinned-notes-panel">
-        <div className="panel-header-row">
-          <h2 className="panel-title">📌 PINNED NOTES</h2>
-        </div>
+      {/* Daily Journal Calendar & Date Bar */}
+      {activeView === "journal" && (
+        <div className="journal-calendar-bar">
+          <button
+            className="journal-nav-btn"
+            onClick={() => {
+              setJournalDate(journalNav.prevDate);
+              handleOpenDailyJournal(journalNav.prevDate);
+            }}
+          >
+            ◀ {journalNav.prevDate}
+          </button>
 
-        <div className="pinned-notes-row">
-          {pinnedNotes.map((note) => (
-            <div
-              key={note.id}
-              className="pinned-parchment-card"
-              onClick={() => onSelectNote(note.id)}
+          <div className="journal-date-picker-group">
+            <span className="cal-icon">📅</span>
+            <input
+              type="date"
+              className="journal-date-input"
+              value={journalDate}
+              onChange={(e) => {
+                setJournalDate(e.target.value);
+                handleOpenDailyJournal(e.target.value);
+              }}
+            />
+            <button
+              className="journal-nav-btn today-btn"
+              onClick={() => {
+                const today = new Date().toISOString().split("T")[0];
+                setJournalDate(today);
+                handleOpenDailyJournal(today);
+              }}
             >
-              <div className="pinned-card-top">
-                <span className="card-book-icon">📖</span>
-                <span className="card-pin-icon">📌</span>
-              </div>
-              <h3 className="pinned-card-title">{note.title}</h3>
-              <p className="pinned-card-snippet">{note.snippet}</p>
-              <div className="pinned-card-tags">
-                {note.tags.slice(0, 2).map((tag, idx) => (
-                  <span key={idx} className="tag-pill-sm">
-                    {tag}
-                  </span>
+              Today
+            </button>
+          </div>
+
+          <button
+            className="journal-nav-btn"
+            onClick={() => {
+              setJournalDate(journalNav.nextDate);
+              handleOpenDailyJournal(journalNav.nextDate);
+            }}
+          >
+            {journalNav.nextDate} ▶
+          </button>
+        </div>
+      )}
+
+      {/* Collections Pills Bar */}
+      <div className="collections-filter-bar">
+        <span className="col-bar-title">COLLECTIONS:</span>
+        <button
+          className={`collection-chip ${selectedCollection === "all" ? "active" : ""}`}
+          onClick={() => setSelectedCollection("all")}
+        >
+          All Collections
+        </button>
+        {allCollections.map((col) => (
+          <button
+            key={col}
+            className={`collection-chip ${selectedCollection === col ? "active" : ""}`}
+            onClick={() => setSelectedCollection(selectedCollection === col ? "all" : col)}
+          >
+            #{col}
+          </button>
+        ))}
+      </div>
+
+      {/* Main Layout Grid: Left Hierarchy Sidebar + Right Notes Grid */}
+      <div className="notes-main-grid">
+        {/* Left Column: Folders & Notebooks Hierarchy */}
+        <div className="notes-panel hierarchy-panel">
+          <div className="panel-header-row">
+            <h2 className="panel-title">NOTEBOOKS & FOLDERS</h2>
+            <div className="panel-btn-group">
+              <button
+                className="mini-add-btn"
+                onClick={() => setIsFolderModalOpen(true)}
+                title="New Folder"
+              >
+                📁+
+              </button>
+              <button
+                className="mini-add-btn"
+                onClick={() => setIsNotebookModalOpen(true)}
+                title="New Notebook"
+              >
+                📖+
+              </button>
+            </div>
+          </div>
+
+          <div className="hierarchy-scroll-list">
+            <div
+              className={`hierarchy-item-row ${
+                selectedNotebookId === "all" && selectedFolderId === "all" ? "active" : ""
+              }`}
+              onClick={() => {
+                setSelectedNotebookId("all");
+                setSelectedFolderId("all");
+              }}
+            >
+              <span className="item-icon">📂</span>
+              <span className="item-title">All Notebooks</span>
+              <span className="item-count">{notes.filter((n) => !n.isTrashed).length}</span>
+            </div>
+
+            {folders.length > 0 && (
+              <div className="hierarchy-section">
+                <span className="section-hdr-lbl">FOLDERS</span>
+                {folders.map((f) => (
+                  <div
+                    key={f.id}
+                    className={`hierarchy-item-row ${selectedFolderId === f.id ? "active" : ""}`}
+                    onClick={() => {
+                      setSelectedFolderId(f.id);
+                      setSelectedNotebookId("all");
+                    }}
+                  >
+                    <span className="item-icon">{f.icon || "📁"}</span>
+                    <span className="item-title">{f.name}</span>
+                    <button
+                      className="mini-delete-btn"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (window.confirm(`Delete folder "${f.name}"?`)) {
+                          deleteFolder(f.id);
+                        }
+                      }}
+                    >
+                      ✕
+                    </button>
+                  </div>
                 ))}
               </div>
+            )}
+
+            <div className="hierarchy-section">
+              <span className="section-hdr-lbl">NOTEBOOKS</span>
+              {notebooks.map((nb) => (
+                <div
+                  key={nb.id}
+                  className={`hierarchy-item-row ${selectedNotebookId === nb.id ? "active" : ""}`}
+                  onClick={() => {
+                    setSelectedNotebookId(nb.id);
+                    setSelectedFolderId("all");
+                  }}
+                >
+                  <span className="item-icon">{nb.iconSymbol || "📖"}</span>
+                  <span className="item-title">{nb.title}</span>
+                  <span className={`nb-color-pill color-${nb.color}`}>{nb.noteCount}</span>
+
+                  {nb.id !== "nb-personal" && (
+                    <button
+                      className="mini-delete-btn"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (window.confirm(`Delete notebook "${nb.title}"?`)) {
+                          deleteNotebook(nb.id);
+                        }
+                      }}
+                    >
+                      ✕
+                    </button>
+                  )}
+                </div>
+              ))}
             </div>
-          ))}
+
+            {allTags.length > 0 && (
+              <div className="hierarchy-section">
+                <span className="section-hdr-lbl">TAGS ({allTags.length})</span>
+                <div className="tags-cloud-container">
+                  {allTags.map((tag) => (
+                    <button
+                      key={tag}
+                      className={`tag-cloud-chip ${selectedTag === tag ? "active" : ""}`}
+                      onClick={() => setSelectedTag(selectedTag === tag ? "" : tag)}
+                    >
+                      {tag}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
         </div>
 
-        {/* Quote Ribbon */}
-        <div className="notes-quote-ribbon">
-          <span>❖ "What you write today, you will become tomorrow." ❖</span>
+        {/* Right Column: Notes Grid */}
+        <div className="notes-panel notes-grid-panel">
+          <div className="panel-header-row">
+            <div className="grid-header-left">
+              <h2 className="panel-title">
+                {activeView === "trash"
+                  ? "TRASH BIN"
+                  : activeView === "archived"
+                  ? "ARCHIVED NOTES"
+                  : activeView === "favorites"
+                  ? "FAVORITE NOTES"
+                  : activeView === "pinned"
+                  ? "PINNED NOTES"
+                  : activeView === "journal"
+                  ? "DAILY JOURNALS"
+                  : "KNOWLEDGE NOTES"}{" "}
+                ({filteredNotes.length})
+              </h2>
+              {selectedTag && (
+                <span className="active-tag-badge">
+                  Tag: {selectedTag}{" "}
+                  <button className="tag-clear-btn" onClick={() => setSelectedTag("")}>
+                    ✕
+                  </button>
+                </span>
+              )}
+            </div>
+
+            <span className="note-shortcut-hint">Ctrl+Shift+N to Quick Capture</span>
+          </div>
+
+          {filteredNotes.length > 0 ? (
+            <div className="notes-card-grid">
+              {filteredNotes.map((note) => (
+                <div
+                  key={note.id}
+                  className={`note-card-item ${note.pinned ? "pinned-card" : ""}`}
+                  onClick={() => onSelectNote(note.id)}
+                >
+                  <div className="note-card-header">
+                    <div className="card-badge-row">
+                      <span className="notebook-pill">{note.notebookName}</span>
+                      {note.isJournal && <span className="journal-badge">📖 Journal</span>}
+                      {note.pinned && <span className="pin-badge">📌 Pinned</span>}
+                    </div>
+
+                    <div className="card-top-actions">
+                      <button
+                        className={`star-btn ${note.pinned ? "active" : ""}`}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          togglePin(note.id);
+                        }}
+                        title="Pin Note"
+                      >
+                        📌
+                      </button>
+
+                      <button
+                        className={`star-btn ${note.isFavorite ? "active" : ""}`}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleFavorite(note.id);
+                        }}
+                        title="Favorite Note"
+                      >
+                        {note.isFavorite ? "♥" : "♡"}
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="note-card-body">
+                    <h3 className="note-card-title">{note.title || "Untitled Note"}</h3>
+                    <p className="note-card-snippet">{note.snippet || "No content snippet..."}</p>
+
+                    {Array.isArray(note.collections) && note.collections.length > 0 && (
+                      <div className="card-collections-row">
+                        {note.collections.map((col, idx) => (
+                          <span key={idx} className="collection-tag-pill">
+                            #{col}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+
+                    {note.tags.length > 0 && (
+                      <div className="card-tags-row">
+                        {note.tags.slice(0, 3).map((tag, idx) => (
+                          <span key={idx} className="card-tag-pill">
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="note-card-footer">
+                    <span className="card-meta-text">
+                      📝 {note.wordsCount} words • ⏱️ {note.readingTimeMinutes} min • {note.lastEdited}
+                    </span>
+
+                    <div className="card-footer-btns">
+                      {activeView === "trash" ? (
+                        <>
+                          <button
+                            className="card-mini-btn btn-restore"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              restoreNote(note.id);
+                            }}
+                            title="Restore Note"
+                          >
+                            ↩ Restore
+                          </button>
+                          <button
+                            className="card-mini-btn btn-delete"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              if (window.confirm(`Permanently delete "${note.title}"?`)) {
+                                deleteNote(note.id);
+                              }
+                            }}
+                            title="Permanent Delete"
+                          >
+                            🗑 Delete
+                          </button>
+                        </>
+                      ) : (
+                        <>
+                          <button
+                            className="card-mini-btn"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              archiveNote(note.id);
+                            }}
+                            title="Archive Note"
+                          >
+                            📦
+                          </button>
+                          <button
+                            className="card-mini-btn btn-delete"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              deleteNote(note.id);
+                            }}
+                            title="Trash Note"
+                          >
+                            🗑
+                          </button>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="notes-empty-state">
+              <span className="empty-icon">📜</span>
+              <h3>No notes found</h3>
+              <p>
+                {searchQuery
+                  ? `No notes match "${searchQuery}".`
+                  : activeView === "trash"
+                  ? "Trash bin is empty."
+                  : "Your parchment workspace is empty."}
+              </p>
+
+              <button
+                className="btn-quick-note margin-top-12"
+                onClick={() => setIsTemplateModalOpen(true)}
+              >
+                + Create Note from Template
+              </button>
+            </div>
+          )}
         </div>
       </div>
+
+      {/* Templates Selector Modal */}
+      {isTemplateModalOpen && (
+        <div className="music-modal-backdrop" onClick={() => setIsTemplateModalOpen(false)}>
+          <div className="music-modal-box large-modal-box" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h3 className="modal-title">📑 Choose a Note Template</h3>
+              <button className="modal-close-btn" onClick={() => setIsTemplateModalOpen(false)}>
+                ✕
+              </button>
+            </div>
+
+            <div className="modal-form">
+              <div className="templates-grid">
+                {templates.map((tmpl) => (
+                  <div
+                    key={tmpl.id}
+                    className={`template-card-item ${
+                      selectedTemplateId === tmpl.id ? "selected" : ""
+                    }`}
+                    onClick={() => setSelectedTemplateId(tmpl.id)}
+                  >
+                    <div className="tmpl-hdr">
+                      <span className="tmpl-icon">{tmpl.icon}</span>
+                      <span className="tmpl-name">{tmpl.name}</span>
+                    </div>
+                    <span className="tmpl-category">{tmpl.category}</span>
+                    <p className="tmpl-preview">{tmpl.defaultTitle}</p>
+                    <button
+                      className="btn-save btn-use-tmpl"
+                      onClick={() => handleCreateNoteWithTemplate(tmpl)}
+                    >
+                      Use Template
+                    </button>
+                  </div>
+                ))}
+              </div>
+
+              <div className="modal-actions margin-top-12">
+                <button
+                  type="button"
+                  className="btn-cancel"
+                  onClick={() => setIsTemplateModalOpen(false)}
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* New Notebook Modal */}
+      {isNotebookModalOpen && (
+        <div className="music-modal-backdrop" onClick={() => setIsNotebookModalOpen(false)}>
+          <div className="music-modal-box" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h3 className="modal-title">📖 Create New Notebook</h3>
+              <button className="modal-close-btn" onClick={() => setIsNotebookModalOpen(false)}>
+                ✕
+              </button>
+            </div>
+
+            <form onSubmit={handleSaveNotebook} className="modal-form">
+              <div className="form-group">
+                <label className="form-label">Notebook Title *</label>
+                <input
+                  type="text"
+                  className="form-input"
+                  placeholder="e.g. JAPANESE STUDY, WORK LOG"
+                  value={newNbTitle}
+                  onChange={(e) => setNewNbTitle(e.target.value)}
+                  required
+                />
+              </div>
+
+              <div className="form-row-2col">
+                <div className="form-group">
+                  <label className="form-label">Icon Symbol</label>
+                  <input
+                    type="text"
+                    className="form-input icon-input"
+                    value={newNbIcon}
+                    onChange={(e) => setNewNbIcon(e.target.value)}
+                    maxLength={4}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label className="form-label">Color Theme</label>
+                  <select
+                    className="form-select"
+                    value={newNbColor}
+                    onChange={(e) => setNewNbColor(e.target.value as any)}
+                  >
+                    <option value="purple">🔮 Purple</option>
+                    <option value="blue">🟦 Blue</option>
+                    <option value="green">🟩 Green</option>
+                    <option value="brown">🟫 Brown</option>
+                    <option value="darkblue">🌌 Dark Blue</option>
+                    <option value="parchment">📜 Parchment</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="modal-actions">
+                <button
+                  type="button"
+                  className="btn-cancel"
+                  onClick={() => setIsNotebookModalOpen(false)}
+                >
+                  Cancel
+                </button>
+                <button type="submit" className="btn-save">
+                  Create Notebook
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* New Folder Modal */}
+      {isFolderModalOpen && (
+        <div className="music-modal-backdrop" onClick={() => setIsFolderModalOpen(false)}>
+          <div className="music-modal-box" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h3 className="modal-title">📁 Create New Folder</h3>
+              <button className="modal-close-btn" onClick={() => setIsFolderModalOpen(false)}>
+                ✕
+              </button>
+            </div>
+
+            <form onSubmit={handleSaveFolder} className="modal-form">
+              <div className="form-group">
+                <label className="form-label">Folder Name *</label>
+                <input
+                  type="text"
+                  className="form-input"
+                  placeholder="e.g. Research & Development"
+                  value={newFolderName}
+                  onChange={(e) => setNewFolderName(e.target.value)}
+                  required
+                />
+              </div>
+
+              <div className="form-group">
+                <label className="form-label">Icon Emoji</label>
+                <input
+                  type="text"
+                  className="form-input icon-input"
+                  value={newFolderIcon}
+                  onChange={(e) => setNewFolderIcon(e.target.value)}
+                  maxLength={4}
+                />
+              </div>
+
+              <div className="modal-actions">
+                <button
+                  type="button"
+                  className="btn-cancel"
+                  onClick={() => setIsFolderModalOpen(false)}
+                >
+                  Cancel
+                </button>
+                <button type="submit" className="btn-save">
+                  Create Folder
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Import Markdown Modal */}
+      {isImportModalOpen && (
+        <div className="music-modal-backdrop" onClick={() => setIsImportModalOpen(false)}>
+          <div className="music-modal-box" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h3 className="modal-title">📥 Import Markdown Note</h3>
+              <button className="modal-close-btn" onClick={() => setIsImportModalOpen(false)}>
+                ✕
+              </button>
+            </div>
+
+            <form onSubmit={handleImportSubmit} className="modal-form">
+              <div className="form-group">
+                <label className="form-label">Option A: Select File (.md / .txt)</label>
+                <button
+                  type="button"
+                  className="btn-import-note"
+                  onClick={handlePickImportFile}
+                >
+                  📁 Choose File to Import
+                </button>
+              </div>
+
+              <div className="form-group">
+                <label className="form-label">Option B: Paste Markdown Content</label>
+                <input
+                  type="text"
+                  className="form-input margin-bottom-8"
+                  placeholder="Note Title..."
+                  value={importTitle}
+                  onChange={(e) => setImportTitle(e.target.value)}
+                />
+                <textarea
+                  className="form-textarea"
+                  placeholder="Paste Markdown text here..."
+                  value={importText}
+                  onChange={(e) => setImportText(e.target.value)}
+                  rows={6}
+                />
+              </div>
+
+              <div className="modal-actions">
+                <button
+                  type="button"
+                  className="btn-cancel"
+                  onClick={() => setIsImportModalOpen(false)}
+                >
+                  Cancel
+                </button>
+                <button type="submit" className="btn-save">
+                  Import Note
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

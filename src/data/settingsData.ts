@@ -1,22 +1,13 @@
-import { SettingsState } from "../types/settings";
+import { AppSettings, DEFAULT_SETTINGS } from "../types/settings";
 
-export const INITIAL_SETTINGS_STATE: SettingsState = {
-  theme: "dark",
-  transparency: 82,
-  blurStrength: 4,
-  panelTint: "purple",
-  accentColor: "#a855f7",
-  backgroundBehavior: "Subtle Parallax",
-  dimBackground: 35,
-  uiFont: "Poppins",
-  fontSize: 16,
-};
+export const INITIAL_SETTINGS_STATE: AppSettings = { ...DEFAULT_SETTINGS };
 
 export const THEME_OPTIONS = [
   { id: "dark", label: "Dark", icon: "🌙" },
   { id: "dusk", label: "Dusk", icon: "🌅" },
   { id: "light", label: "Light", icon: "☀️" },
   { id: "midnight", label: "Midnight", icon: "🌌" },
+  { id: "system", label: "System", icon: "💻" },
 ];
 
 export const ACCENT_COLORS = [

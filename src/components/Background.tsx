@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { wallpaperService } from "../services/wallpaperService";
 
 interface BackgroundProps {
   bgUrl: string;
@@ -11,7 +12,8 @@ export function Background({ bgUrl, altText = "DailyLife Dynamic Wallpaper" }: B
   const [isCrossfading, setIsCrossfading] = useState<boolean>(false);
 
   useEffect(() => {
-    if (bgUrl !== currentBg) {
+    if (bgUrl && bgUrl !== currentBg) {
+      console.log(`🖼️ [Background] Image src updated to: "${bgUrl}"`);
       setPrevBg(currentBg);
       setCurrentBg(bgUrl);
       setIsCrossfading(true);
@@ -24,6 +26,19 @@ export function Background({ bgUrl, altText = "DailyLife Dynamic Wallpaper" }: B
       return () => clearTimeout(timer);
     }
   }, [bgUrl, currentBg]);
+
+  const handleImageError = (failedUrl: string) => {
+    console.error(`❌ [Background] Failed to load wallpaper image URL: "${failedUrl}"`);
+    const fallback = wallpaperService.getBundledDefault("home");
+    if (failedUrl !== fallback) {
+      console.log(`🔄 [Background] Falling back to bundled background: "${fallback}"`);
+      setCurrentBg(fallback);
+    }
+  };
+
+  const handleImageLoad = (loadedUrl: string) => {
+    console.log(`✅ [Background] Successfully loaded wallpaper image: "${loadedUrl}"`);
+  };
 
   return (
     <div className="background-container" data-tauri-drag-region>
@@ -41,6 +56,8 @@ export function Background({ bgUrl, altText = "DailyLife Dynamic Wallpaper" }: B
         src={currentBg}
         alt={altText}
         className={`background-image background-current ${isCrossfading ? "fade-in" : ""}`}
+        onLoad={() => handleImageLoad(currentBg)}
+        onError={() => handleImageError(currentBg)}
       />
 
       <div className="background-vignette" />

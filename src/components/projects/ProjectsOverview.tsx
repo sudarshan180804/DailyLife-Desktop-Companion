@@ -28,10 +28,28 @@ export function ProjectsOverview({
           <p className="projects-quote-text">Plan your quests. Build your legacy.</p>
         </div>
 
-        <button className="new-project-btn" onClick={onOpenNewProjectModal}>
-          <PlusIcon size={18} />
-          <span>+ New Project</span>
-        </button>
+        <div className="header-btn-row" style={{ display: "flex", gap: "8px" }}>
+          <button
+            className="new-project-btn btn-secondary-note"
+            onClick={async () => {
+              const notesStore = (await import("../../modules/notes")).notesStore;
+              await notesStore.createNote({
+                title: "Project Research Note",
+                content: "# Project Research & Ideas\n\nNotes for new project build...",
+                collections: ["Unreal", "Research"],
+                tags: ["#ProjectNote"],
+              });
+            }}
+            title="Create Note for Project"
+          >
+            <span>📝 + Note</span>
+          </button>
+
+          <button className="new-project-btn" onClick={onOpenNewProjectModal}>
+            <PlusIcon size={18} />
+            <span>+ New Project</span>
+          </button>
+        </div>
       </div>
 
       {/* Top Summary Cards Bar */}
@@ -52,7 +70,7 @@ export function ProjectsOverview({
           </div>
           <div className="card-info">
             <span className="card-label">XP Earned</span>
-            <span className="card-val highlight-gold">{totalXpEarned.toLocaleString()} XP</span>
+            <span className="card-val highlight-gold">{(totalXpEarned ?? 0).toLocaleString()} XP</span>
           </div>
         </div>
 

@@ -1,6 +1,5 @@
-import { useState, useEffect } from "react";
 import natsuProfileImg from "../assets/profile/natsu-profile.png";
-import { xpService, XPState } from "../services/xpService";
+import { useProfileStore } from "../stores/profileStore";
 import {
   HomeIcon,
   TasksIcon,
@@ -10,7 +9,7 @@ import {
   JapaneseIcon,
   AnimeIcon,
   MusicIcon,
-  SettingsIcon
+  SettingsIcon,
 } from "./Icons";
 
 export interface NavItem {
@@ -26,7 +25,7 @@ const NAV_ITEMS: NavItem[] = [
   { id: "gym", label: "Gym", icon: GymIcon },
   { id: "notes", label: "Notes", icon: NotesIcon },
   { id: "japanese", label: "Japanese", icon: JapaneseIcon },
-  { id: "anime", label: "Anime", icon: AnimeIcon },
+  { id: "anime", label: "Entertainment", icon: AnimeIcon },
   { id: "music", label: "Music", icon: MusicIcon },
   { id: "settings", label: "Settings", icon: SettingsIcon },
 ];
@@ -42,16 +41,12 @@ export function Sidebar({
   onSelectTab,
   onHoverChange,
 }: SidebarProps) {
-  const [xpState, setXpState] = useState<XPState>(() => xpService.getXPState());
+  const { profile } = useProfileStore();
 
-  useEffect(() => {
-    const unsubscribe = xpService.subscribe((updated) => {
-      setXpState(updated);
-    });
-    return () => unsubscribe();
-  }, []);
-
-  const xpPercent = Math.min(100, Math.max(0, (xpState.currentXp / xpState.nextLevelXp) * 100));
+  const xpPercent = Math.min(
+    100,
+    Math.max(0, (profile.currentXP / 100) * 100)
+  );
 
   return (
     <aside
@@ -64,19 +59,19 @@ export function Sidebar({
         <div className="profile-avatar-wrapper">
           <img
             src={natsuProfileImg}
-            alt="Sudarshan"
+            alt={profile.name}
             className="profile-avatar-img"
           />
         </div>
 
         <div className="profile-expanded-details">
-          <h2 className="profile-username">Sudarshan</h2>
-          <span className="profile-level-badge">Level {xpState.level}</span>
+          <h2 className="profile-username">{profile.name}</h2>
+          <span className="profile-level-badge">Level {profile.level}</span>
           <div className="xp-bar-container">
             <div className="xp-bar-fill" style={{ width: `${xpPercent}%` }} />
           </div>
           <span className="xp-text">
-            {xpState.currentXp} / {xpState.nextLevelXp} XP
+            {profile.currentXP} / 100 XP
           </span>
         </div>
       </div>

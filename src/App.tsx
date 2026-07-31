@@ -12,22 +12,18 @@ import { AnimePage } from "./components/anime/AnimePage";
 import { MusicPage } from "./components/music/MusicPage";
 import { SettingsPage } from "./components/settings/SettingsPage";
 import { WindowControlsOverlay } from "./components/WindowControlsOverlay";
-import { getBackgroundForTime } from "./utils/timePeriod";
-import taskBgImg from "./assets/backgrounds/taskbg.png";
-import projectBgImg from "./assets/backgrounds/projectbg.png";
-import gymBgImg from "./assets/backgrounds/duringworkout.jpeg";
-import studyBgImg from "./assets/backgrounds/study.png";
-import jpBgImg from "./assets/backgrounds/jpbg.png";
-import animeBgImg from "./assets/backgrounds/animebg.png";
-import musicBgImg from "./assets/backgrounds/musicbg.png";
-import settingBgImg from "./assets/backgrounds/settingbg.png";
+import { NotificationContainer } from "./components/notifications/NotificationContainer";
+import { ErrorBoundary } from "./components/common/ErrorBoundary";
+import { useKeyboardShortcuts } from "./hooks/useKeyboardShortcuts";
+import { useSettingsStore } from "./modules/settings";
+import { useActiveWallpaper } from "./services/wallpaperService";
 import "./App.css";
 
 export function App() {
-  const [activeTab, setActiveTab] = useState<string>("home");
+  const { settings } = useSettingsStore();
+  const [activeTab, setActiveTab] = useState<string>(() => settings.startupPage || "home");
   const [isOverlayVisible, setIsOverlayVisible] = useState<boolean>(false);
   const [isSidebarHovered, setIsSidebarHovered] = useState<boolean>(false);
-  const [bgUrl, setBgUrl] = useState<string>(() => getBackgroundForTime());
 
   // Enforce true fullscreen on launch in Tauri environment
   useEffect(() => {
@@ -55,37 +51,14 @@ export function App() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
-  // Periodically re-evaluate time to auto-switch background when period changes
-  useEffect(() => {
-    const checkTimeBackground = () => {
-      const newBg = getBackgroundForTime();
-      setBgUrl((prevBg) => (prevBg !== newBg ? newBg : prevBg));
-    };
+  // Active wallpaper obtained exclusively through WallpaperService
+  const currentWallpaper = useActiveWallpaper(activeTab, settings);
 
-    // Re-check every 30 seconds
-    const interval = setInterval(checkTimeBackground, 30000);
-    return () => clearInterval(interval);
-  }, []);
-
-  // Active wallpaper mapping
-  const currentWallpaper =
-    activeTab === "tasks"
-      ? taskBgImg
-      : activeTab === "projects"
-      ? projectBgImg
-      : activeTab === "gym"
-      ? gymBgImg
-      : activeTab === "notes"
-      ? studyBgImg
-      : activeTab === "japanese"
-      ? jpBgImg
-      : activeTab === "anime"
-      ? animeBgImg
-      : activeTab === "music"
-      ? musicBgImg
-      : activeTab === "settings"
-      ? settingBgImg
-      : bgUrl;
+  // Register global keyboard shortcuts (Numbers 1-9 for tabs, Esc for overlay)
+  useKeyboardShortcuts({
+    onSelectTab: (tabId) => setActiveTab(tabId),
+    onEscape: () => setIsOverlayVisible(false),
+  });
 
   return (
     <div className="app-container">
@@ -100,17 +73,22 @@ export function App() {
       />
 
       {/* Main Content Area - Generically adjusts layout offset on sidebar hover */}
-      <main className={`main-content ${isSidebarHovered ? "sidebar-expanded" : ""}`}>
-        {activeTab === "home" && <GreetingSection />}
-        {activeTab === "tasks" && <TasksPage />}
-        {activeTab === "projects" && <ProjectsPage />}
-        {activeTab === "gym" && <GymPage />}
-        {activeTab === "notes" && <NotesPage />}
-        {activeTab === "japanese" && <JapanesePage />}
-        {activeTab === "anime" && <AnimePage />}
-        {activeTab === "music" && <MusicPage />}
-        {activeTab === "settings" && <SettingsPage />}
-      </main>
+      <ErrorBoundary>
+        <main className={`main-content ${isSidebarHovered ? "sidebar-expanded" : ""}`}>
+          {activeTab === "home" && <GreetingSection />}
+          {activeTab === "tasks" && <TasksPage />}
+          {activeTab === "projects" && <ProjectsPage />}
+          {activeTab === "gym" && <GymPage />}
+          {activeTab === "notes" && <NotesPage />}
+          {activeTab === "japanese" && <JapanesePage />}
+          {activeTab === "anime" && <AnimePage />}
+          {activeTab === "music" && <MusicPage />}
+          {activeTab === "settings" && <SettingsPage />}
+        </main>
+      </ErrorBoundary>
+
+      {/* Top-Right Floating Notification Stack */}
+      <NotificationContainer />
 
       {/* Top-Right ESC Window Controls Overlay */}
       <WindowControlsOverlay

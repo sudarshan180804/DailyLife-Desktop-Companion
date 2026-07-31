@@ -1,5 +1,6 @@
 import React from "react";
 import { Task, Category } from "../../types/task";
+import { EmptyState } from "../common/EmptyState";
 import {
   CodeIcon,
   GymIcon,
@@ -50,9 +51,11 @@ export function TaskList({
 }: TaskListProps) {
   if (tasks.length === 0) {
     return (
-      <div className="task-list-empty">
-        <p>No tasks found in this section.</p>
-      </div>
+      <EmptyState
+        icon="⚔️"
+        title="No Quest Tasks Available"
+        description="Your task board is clear! Create a new quest task to start earning XP and coins."
+      />
     );
   }
 

@@ -1,11 +1,10 @@
 import { useState } from "react";
-import {
-  MOCK_JAPANESE_PROGRESS,
-  MOCK_ANKI_DECKS,
-  MOCK_TODAYS_WORDS,
-} from "../../data/japaneseData";
+import { useJapaneseStore } from "../../modules/japanese";
+import { useProfileStore } from "../../stores/profileStore";
 
 export function JapanesePage() {
+  const { progress, decks, words, completeStudySession } = useJapaneseStore();
+  const { profile } = useProfileStore();
   const [playingAudioId, setPlayingAudioId] = useState<string | null>(null);
 
   const handlePlayAudio = (id: string) => {
@@ -13,7 +12,9 @@ export function JapanesePage() {
     setTimeout(() => setPlayingAudioId(null), 800);
   };
 
-  const progress = MOCK_JAPANESE_PROGRESS;
+  const handleDeckClick = (deckId: string) => {
+    completeStudySession(deckId, 5);
+  };
 
   return (
     <div className="japanese-page-wrapper">
@@ -38,13 +39,37 @@ export function JapanesePage() {
           </div>
         </div>
 
-        {/* Top Right Stats Row */}
+        {/* Top Right Stats Row & Note Trigger */}
         <div className="jp-header-stats-panel">
+          <button
+            className="new-task-action-btn btn-secondary-note"
+            onClick={async () => {
+              const notesStore = (await import("../../modules/notes")).notesStore;
+              await notesStore.createNote({
+                templateId: "template-japanese",
+                notebookId: "nb-study",
+                collections: ["Japanese"],
+                tags: ["#JapaneseStudy"],
+              });
+            }}
+            title="Create Japanese Study Note"
+            style={{
+              background: "linear-gradient(135deg, #ec4899 0%, #be185d 100%)",
+              border: "none",
+              color: "#fff",
+              fontWeight: 800,
+              padding: "6px 14px",
+              borderRadius: "8px",
+              cursor: "pointer",
+            }}
+          >
+            <span>⛩️ + Study Note</span>
+          </button>
           <div className="jp-stat-badge">
             <span className="badge-icon">🌸</span>
             <div className="badge-text-group">
               <span className="badge-lbl">Level</span>
-              <span className="badge-val">{progress.level}</span>
+              <span className="badge-val">{profile.level || progress.level}</span>
             </div>
           </div>
 
@@ -54,7 +79,9 @@ export function JapanesePage() {
             <span className="badge-icon">🔥</span>
             <div className="badge-text-group">
               <span className="badge-lbl">Streak</span>
-              <span className="badge-val highlight-orange">{progress.streakDays} days</span>
+              <span className="badge-val highlight-orange">
+                {profile.stats.streakDays || progress.streakDays} days
+              </span>
             </div>
           </div>
 
@@ -65,7 +92,8 @@ export function JapanesePage() {
             <div className="badge-text-group">
               <span className="badge-lbl">Japanese XP</span>
               <span className="badge-val highlight-purple">
-                {progress.currentXp} <span className="sub-target">/ {progress.targetXp}</span>
+                {profile.currentXP || progress.currentXp}{" "}
+                <span className="sub-target">/ 100</span>
               </span>
             </div>
           </div>
@@ -89,14 +117,19 @@ export function JapanesePage() {
                   <span className="item-icon">📘</span> Vocabulary
                 </span>
                 <span className="item-val">
-                  {progress.todayJourney.vocabCurrent} / {progress.todayJourney.vocabTarget}
+                  {progress.todayJourney.vocabCurrent} /{" "}
+                  {progress.todayJourney.vocabTarget}
                 </span>
               </div>
               <div className="jp-progress-bg">
                 <div
                   className="jp-progress-fill fill-purple"
                   style={{
-                    width: `${(progress.todayJourney.vocabCurrent / progress.todayJourney.vocabTarget) * 100}%`,
+                    width: `${
+                      (progress.todayJourney.vocabCurrent /
+                        progress.todayJourney.vocabTarget) *
+                      100
+                    }%`,
                   }}
                 />
               </div>
@@ -109,14 +142,19 @@ export function JapanesePage() {
                   <span className="item-kanji-icon">漢</span> Kanji
                 </span>
                 <span className="item-val">
-                  {progress.todayJourney.kanjiCurrent} / {progress.todayJourney.kanjiTarget}
+                  {progress.todayJourney.kanjiCurrent} /{" "}
+                  {progress.todayJourney.kanjiTarget}
                 </span>
               </div>
               <div className="jp-progress-bg">
                 <div
                   className="jp-progress-fill fill-pink"
                   style={{
-                    width: `${(progress.todayJourney.kanjiCurrent / progress.todayJourney.kanjiTarget) * 100}%`,
+                    width: `${
+                      (progress.todayJourney.kanjiCurrent /
+                        progress.todayJourney.kanjiTarget) *
+                      100
+                    }%`,
                   }}
                 />
               </div>
@@ -129,14 +167,19 @@ export function JapanesePage() {
                   <span className="item-icon">⛩️</span> Grammar
                 </span>
                 <span className="item-val">
-                  {progress.todayJourney.grammarCurrent} / {progress.todayJourney.grammarTarget}
+                  {progress.todayJourney.grammarCurrent} /{" "}
+                  {progress.todayJourney.grammarTarget}
                 </span>
               </div>
               <div className="jp-progress-bg">
                 <div
                   className="jp-progress-fill fill-green"
                   style={{
-                    width: `${(progress.todayJourney.grammarCurrent / progress.todayJourney.grammarTarget) * 100}%`,
+                    width: `${
+                      (progress.todayJourney.grammarCurrent /
+                        progress.todayJourney.grammarTarget) *
+                      100
+                    }%`,
                   }}
                 />
               </div>
@@ -148,15 +191,23 @@ export function JapanesePage() {
                 <span className="item-title">
                   <span className="item-icon">🔄</span> Review
                 </span>
-                <span className="item-val">{progress.todayJourney.reviewDue} cards</span>
+                <span className="item-val">
+                  {progress.todayJourney.reviewDue} cards
+                </span>
               </div>
               <div className="jp-progress-bg">
-                <div className="jp-progress-fill fill-blue" style={{ width: "85%" }} />
+                <div
+                  className="jp-progress-fill fill-blue"
+                  style={{ width: "85%" }}
+                />
               </div>
             </div>
           </div>
 
-          <button className="continue-learning-btn">
+          <button
+            className="continue-learning-btn"
+            onClick={() => completeStudySession(undefined, 5)}
+          >
             <span>Continue Learning</span>
             <span className="btn-arrow">→</span>
           </button>
@@ -173,7 +224,11 @@ export function JapanesePage() {
           <div className="goal-segmented-bar-row">
             <div className="segmented-bar">
               {Array.from({ length: 15 }).map((_, idx) => {
-                const isActive = idx < Math.round((progress.dailyGoal.percentCompleted / 100) * 15);
+                const isActive =
+                  idx <
+                  Math.round(
+                    (progress.dailyGoal.percentCompleted / 100) * 15
+                  );
                 return (
                   <div
                     key={idx}
@@ -182,7 +237,9 @@ export function JapanesePage() {
                 );
               })}
             </div>
-            <span className="goal-percent-text">{progress.dailyGoal.percentCompleted}%</span>
+            <span className="goal-percent-text">
+              {progress.dailyGoal.percentCompleted}%
+            </span>
           </div>
 
           {/* 2x2 Metric Grid */}
@@ -191,7 +248,9 @@ export function JapanesePage() {
               <span className="box-tag">VOCABULARY</span>
               <div className="box-val-row">
                 <span className="box-icon">📘</span>
-                <span className="box-num">{progress.dailyGoal.vocabLearned}</span>
+                <span className="box-num">
+                  {progress.dailyGoal.vocabLearned}
+                </span>
               </div>
               <span className="box-sub">learned</span>
             </div>
@@ -200,7 +259,9 @@ export function JapanesePage() {
               <span className="box-tag">KANJI</span>
               <div className="box-val-row">
                 <span className="box-kanji-icon">漢</span>
-                <span className="box-num">{progress.dailyGoal.kanjiLearned}</span>
+                <span className="box-num">
+                  {progress.dailyGoal.kanjiLearned}
+                </span>
               </div>
               <span className="box-sub">learned</span>
             </div>
@@ -209,7 +270,9 @@ export function JapanesePage() {
               <span className="box-tag">GRAMMAR</span>
               <div className="box-val-row">
                 <span className="box-icon">⛩️</span>
-                <span className="box-num">{progress.dailyGoal.grammarLessons}</span>
+                <span className="box-num">
+                  {progress.dailyGoal.grammarLessons}
+                </span>
               </div>
               <span className="box-sub">lessons</span>
             </div>
@@ -218,7 +281,9 @@ export function JapanesePage() {
               <span className="box-tag">REVIEW</span>
               <div className="box-val-row">
                 <span className="box-icon">🔄</span>
-                <span className="box-num">{progress.dailyGoal.reviewDueToday}</span>
+                <span className="box-num">
+                  {progress.dailyGoal.reviewDueToday}
+                </span>
               </div>
               <span className="box-sub">due today</span>
             </div>
@@ -233,8 +298,13 @@ export function JapanesePage() {
           </div>
 
           <div className="decks-scroll-list">
-            {MOCK_ANKI_DECKS.map((deck) => (
-              <div key={deck.id} className="deck-item-row">
+            {decks.map((deck) => (
+              <div
+                key={deck.id}
+                className="deck-item-row"
+                onClick={() => handleDeckClick(deck.id)}
+                style={{ cursor: "pointer" }}
+              >
                 <div className={`deck-badge color-${deck.badgeColor}`}>
                   {deck.iconSymbol}
                 </div>
@@ -273,12 +343,14 @@ export function JapanesePage() {
         </div>
 
         <div className="words-grid">
-          {MOCK_TODAYS_WORDS.map((word) => (
+          {words.map((word) => (
             <div key={word.id} className="word-card-item">
               <div className="word-kanji-row">
                 <span className="word-kanji">{word.kanji}</span>
                 <button
-                  className={`audio-btn ${playingAudioId === word.id ? "playing" : ""}`}
+                  className={`audio-btn ${
+                    playingAudioId === word.id ? "playing" : ""
+                  }`}
                   onClick={() => handlePlayAudio(word.id)}
                   title="Listen pronunciation"
                 >
@@ -301,7 +373,9 @@ export function JapanesePage() {
         <div className="jp-footer-proverb-ribbon">
           <span className="ribbon-flower">🌸</span>
           <span className="footer-kanji">一日一歩、夢に近づく。</span>
-          <span className="footer-english">One step every day brings you closer to your dream.</span>
+          <span className="footer-english">
+            One step every day brings you closer to your dream.
+          </span>
           <span className="ribbon-flower">🌸</span>
         </div>
       </div>

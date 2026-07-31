@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Task, TaskTab, TaskSummary } from "../../types/task";
-import { taskService } from "../../services/taskService";
+import { useTaskStore } from "../../modules/tasks";
 import { xpService, XPState } from "../../services/xpService";
 import { TaskSummaryCards } from "./TaskSummaryCards";
 import { TaskList } from "./TaskList";
@@ -9,24 +9,30 @@ import { NewTaskModal } from "./NewTaskModal";
 import { SparklesIcon, PlusIcon } from "../Icons";
 
 export function TasksPage() {
-  const [tasks, setTasks] = useState<Task[]>(() => taskService.getTasks());
+  const {
+    tasks,
+    createTask,
+    updateTask,
+    deleteTask,
+    toggleTask,
+    toggleSubtask,
+  } = useTaskStore();
+
   const [xpState, setXpState] = useState<XPState>(() => xpService.getXPState());
   const [activeTab, setActiveTab] = useState<TaskTab>("today");
-  const [selectedTaskId, setSelectedTaskId] = useState<string | undefined>(() => tasks[0]?.id);
+  const [selectedTaskId, setSelectedTaskId] = useState<string | undefined>(
+    () => tasks[0]?.id
+  );
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
 
-  // Subscribe to taskService and xpService updates
+  // Subscribe to xpService updates
   useEffect(() => {
-    const unsubscribeTasks = taskService.subscribe((updatedTasks) => {
-      setTasks(updatedTasks);
-    });
     const unsubscribeXP = xpService.subscribe((updatedXP) => {
       setXpState(updatedXP);
     });
 
     return () => {
-      unsubscribeTasks();
       unsubscribeXP();
     };
   }, []);
@@ -38,12 +44,14 @@ export function TasksPage() {
     return true; // "today" tab shows all current tasks
   });
 
-  const selectedTask = tasks.find((t) => t.id === selectedTaskId) || filteredTasks[0] || null;
+  const selectedTask =
+    selectedTaskId ? tasks.find((t) => t.id === selectedTaskId) || null : null;
 
   // Compute Task Summary statistics
   const completedCount = tasks.filter((t) => t.completed).length;
   const totalCount = tasks.length;
-  const progressPercent = totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0;
+  const progressPercent =
+    totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0;
 
   const summary: TaskSummary = {
     progressPercent,
@@ -54,13 +62,13 @@ export function TasksPage() {
     bestStreakDays: xpState.bestStreakDays,
   };
 
-  const handleToggleTaskComplete = (taskId: string, e?: React.MouseEvent) => {
+  const handleToggleTaskComplete = async (taskId: string, e?: React.MouseEvent) => {
     if (e) e.stopPropagation();
-    taskService.toggleTaskComplete(taskId);
+    await toggleTask(taskId);
   };
 
-  const handleToggleSubtask = (taskId: string, subtaskId: string) => {
-    taskService.toggleSubtask(taskId, subtaskId);
+  const handleToggleSubtask = async (taskId: string, subtaskId: string) => {
+    await toggleSubtask(taskId, subtaskId);
   };
 
   const handleOpenNewTaskModal = () => {
@@ -73,12 +81,11 @@ export function TasksPage() {
     setIsModalOpen(true);
   };
 
-  const handleSaveTask = (taskData: any) => {
+  const handleSaveTask = async (taskData: any) => {
     if (taskData.id) {
       const existing = tasks.find((t) => t.id === taskData.id);
       if (existing) {
-        taskService.updateTask({
-          ...existing,
+        await updateTask(taskData.id, {
           title: taskData.title,
           description: taskData.description,
           category: taskData.category,
@@ -95,13 +102,21 @@ export function TasksPage() {
         });
       }
     } else {
-      const created = taskService.addTask(taskData);
+      const created = await createTask({
+        title: taskData.title,
+        description: taskData.description,
+        category: taskData.category,
+        priority: taskData.priority,
+        xpReward: taskData.xpReward,
+        dueTime: taskData.dueTime,
+        subtasks: taskData.subtasks,
+      });
       setSelectedTaskId(created.id);
     }
   };
 
-  const handleDeleteTask = (taskId: string) => {
-    taskService.deleteTask(taskId);
+  const handleDeleteTask = async (taskId: string) => {
+    await deleteTask(taskId);
     if (selectedTaskId === taskId) {
       const remaining = tasks.filter((t) => t.id !== taskId);
       setSelectedTaskId(remaining[0]?.id);
@@ -143,6 +158,22 @@ export function TasksPage() {
         </div>
 
         <div className="tasks-header-right">
+          <button
+            className="new-task-action-btn btn-secondary-note"
+            onClick={async () => {
+              const notesStore = (await import("../../modules/notes")).notesStore;
+              await notesStore.createNote({
+                title: "Task Note: New Task Idea",
+                content: "# Task Note\n\nNotes & context for task...",
+                collections: ["DailyLife"],
+                tags: ["#TaskNote"],
+              });
+            }}
+            title="Create Note for Task"
+          >
+            <span>📝 + Note</span>
+          </button>
+
           <button className="new-task-action-btn" onClick={handleOpenNewTaskModal}>
             <PlusIcon size={18} />
             <span>New Task</span>
