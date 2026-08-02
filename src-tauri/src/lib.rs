@@ -185,6 +185,36 @@ fn import_wallpaper(app_handle: tauri::AppHandle, source_path: String) -> Result
 }
 
 #[tauri::command]
+fn import_gym_media(app_handle: tauri::AppHandle, source_path: String) -> Result<String, String> {
+    use std::fs;
+
+    let src = Path::new(&source_path);
+    if !src.exists() {
+        return Err(format!("Source media file does not exist: {}", source_path));
+    }
+
+    let ext = src.extension().and_then(|e| e.to_str()).unwrap_or("png");
+    let timestamp = std::time::SystemTime::now()
+        .duration_since(std::time::UNIX_EPOCH)
+        .map(|d| d.as_millis())
+        .unwrap_or(0);
+    let filename = format!("gym_media_{}.{}", timestamp, ext);
+
+    let app_dir = app_handle
+        .path()
+        .app_data_dir()
+        .map_err(|e| e.to_string())?;
+
+    let gym_media_dir = app_dir.join("gym_media");
+    fs::create_dir_all(&gym_media_dir).map_err(|e| e.to_string())?;
+
+    let dest_path = gym_media_dir.join(&filename);
+    fs::copy(src, &dest_path).map_err(|e| e.to_string())?;
+
+    Ok(dest_path.to_string_lossy().to_string())
+}
+
+#[tauri::command]
 fn launch_app_or_file(target_path: String, args: Option<String>) -> Result<bool, String> {
     if target_path.trim().is_empty() {
         return Err("Target path is empty".to_string());
@@ -316,6 +346,7 @@ pub fn run() {
             validate_path,
             validate_uri_scheme,
             import_wallpaper,
+            import_gym_media,
             launch_app_or_file,
             open_folder_explorer,
             open_web_link

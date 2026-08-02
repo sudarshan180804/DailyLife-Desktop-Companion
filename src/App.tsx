@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { getCurrentWindow } from "@tauri-apps/api/window";
 import { Background } from "./components/Background";
 import { Sidebar } from "./components/Sidebar";
-import { GreetingSection } from "./components/GreetingSection";
+import { HomePage } from "./components/home/HomePage";
 import { TasksPage } from "./components/tasks/TasksPage";
 import { ProjectsPage } from "./components/projects/ProjectsPage";
 import { GymPage } from "./components/gym/GymPage";
@@ -75,7 +75,9 @@ export function App() {
       {/* Main Content Area - Generically adjusts layout offset on sidebar hover */}
       <ErrorBoundary>
         <main className={`main-content ${isSidebarHovered ? "sidebar-expanded" : ""}`}>
-          {activeTab === "home" && <GreetingSection />}
+          {activeTab === "home" && (
+            <HomePage onNavigateToModule={(tabId) => setActiveTab(tabId)} />
+          )}
           {activeTab === "tasks" && <TasksPage />}
           {activeTab === "projects" && <ProjectsPage />}
           {activeTab === "gym" && <GymPage />}

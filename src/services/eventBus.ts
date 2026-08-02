@@ -26,8 +26,9 @@ export interface EventMap {
   "note:updated": { noteId: string; note?: any };
   "note:deleted": { noteId: string };
   "gym:exerciseCompleted": { exerciseId: string; xpReward: number; exercise?: any };
-  "gym:sessionCompleted": { workoutId: string; totalXp: number; bonusCoins: number };
-  "gym:updated": { exercises: any[]; timeline: any[] };
+  "gym:sessionCompleted": { workoutId?: string; totalXp?: number; bonusCoins?: number; historyRecord?: any };
+  "gym:sessionStarted"?: { session: any };
+  "gym:updated": { exercises?: any[]; timeline?: any[]; workoutDays?: any[]; history?: any[] };
   "japanese:studyCompleted": { deckId?: string; cardsStudied: number; xpEarned: number };
   "japanese:goalCompleted": { goalPercent: number; bonusCoins: number };
   "japanese:updated": { progress: any; decks: any[]; words: any[] };

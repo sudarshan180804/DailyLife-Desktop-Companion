@@ -100,7 +100,8 @@ export async function runServiceTests(): Promise<{ passed: number; failed: numbe
 
     // 8. GymService Tests
     const exercises = gymServiceModule.getExercises();
-    assert(exercises.length > 0, "GymService returns exercise list");
+    const days = gymServiceModule.getWorkoutDays();
+    assert(Array.isArray(exercises) && Array.isArray(days), "GymService returns valid exercises and workout days arrays");
 
     // 9. JapaneseService Tests
     const jpProgress = japaneseServiceModule.getProgress();

@@ -33,6 +33,21 @@ export class NativeDialogService {
   }
 
   /**
+   * Imports a user-selected gym exercise media file (image/video) into app data directory and returns raw filesystem path for persistent storage.
+   */
+  async importGymMedia(sourcePath: string): Promise<string> {
+    if (!sourcePath) return "";
+    try {
+      const destPath = await invoke<string>("import_gym_media", { sourcePath });
+      console.log(`[NativeDialogService] Imported gym media "${sourcePath}" -> Raw Path: "${destPath}"`);
+      return destPath;
+    } catch (err) {
+      console.warn("[NativeDialogService] import_gym_media fallback to sourcePath:", err);
+      return sourcePath;
+    }
+  }
+
+  /**
    * Converts a raw local disk file path (C:\...) to a webview-safe asset URL immediately before rendering.
    * Bundled Vite assets and already-converted URLs are passed through untouched.
    */
